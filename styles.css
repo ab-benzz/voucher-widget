@@ -18,8 +18,8 @@ body {
   align-items: center;
   width: 1300px;
   overflow: hidden;
-  border-radius: 20px;
-  background-color: blue;
+  border-radius: clamp(8.706px, 2vw, 20px);
+  background-color: #293afb;
   gap: clamp(4px, 2vw, 8px);
   padding: clamp(10px, 2vw, 20px) 0 6px;
 }
