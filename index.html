@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <section id="payday-sale-banner">
+        <div>
+            <img src="payday_sale_banner.png" alt="">
+
+            <div>
+                <div class="payment-timer-container">
+                    <div>
+                        <p id="timer-days">00</p>
+                        <p>Days</pp>
+                    </div>
+                    <p>:</p>
+                    <div>
+                        <p id="timer-hrs">00</p>
+                        <p>Hours</p>
+                    </div>
+                    <p>:</p>
+                    <div>
+                        <p id="timer-mins">00</p>
+                        <p>Minutes</p>
+                    </div>
+                    <p>:</p>
+                    <div>
+                        <p id="timer-secs">00</p>
+                        <p>Seconds</p>
+                    </div>
+                </div>
+
+                <div class="payday-cta">
+                    <button>Shop now</button>
+                    <p>Mar 28 - 31, 2025</p>
+                </div>
+            </div>
+        </div>
+        <p class="payday-disclaimer">DTI Fair Trade Permit No. FTEB-217822 and 214255 Series of 2025.
+            Pre-order offers are valid from March 20 - 27, 2025 only.</p>
+    </section>
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+<!-- // type="text/simi-script" -->
+<script>
+    const countDownDate = new Date("March 31, 2025 23:59:59").getTime();
+
+    const x = setInterval(function () {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("timer-days").innerHTML = (days < 10) ? ('0' + days) : days;
+        document.getElementById("timer-hrs").innerHTML = (hours < 10) ? ('0' + hours) : hours;
+        document.getElementById("timer-mins").innerHTML = (minutes < 10) ? ('0' + minutes) : minutes;
+        document.getElementById("timer-secs").innerHTML = (seconds < 10) ? ('0' + seconds) : seconds;
+
+    }, 1000);
+
+    document.addEventListener('DOMContentLoaded', checkDateAndHideDiv);
+
+</script>

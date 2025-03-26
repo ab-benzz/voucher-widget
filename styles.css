@@ -1,0 +1,158 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  align-items: center;
+  font-family: "Poppins", serif;
+  color: #4c525c;
+  display: flex;
+  justify-content: center;
+}
+
+#payday-sale-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1300px;
+  overflow: hidden;
+  border-radius: 20px;
+  background-color: blue;
+  gap: clamp(4px, 2vw, 8px);
+  padding: clamp(10px, 2vw, 20px) 0 6px;
+}
+
+#payday-sale-banner > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* padding: ; */
+  /* padding: 24px 0; */
+}
+
+/* Left column of flex */
+#payday-sale-banner > div > div {
+  display: grid;
+  gap: clamp(2px, 1vw, 8px);
+}
+
+#payday-sale-banner img {
+  /* height: 70%; */
+  width: 30vw;
+  max-width: 210px;
+  min-width: 120px;
+  height: auto;
+}
+
+.payment-timer-container {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: 20px;
+  gap: clamp(6px, 1vw, 18px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(
+    117deg,
+    rgba(226, 239, 255, 0.36) 0.74%,
+    rgba(226, 239, 255, 0.12) 111.76%
+  );
+}
+
+.payment-timer-container div {
+  flex-basis: 100px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 8px;
+}
+
+/* Colon separator in timer */
+.payment-timer-container > p {
+  color: var(--Primary-CTA-Font, #fff);
+}
+.payment-timer-container > div p {
+  font-size: clamp(10px, 2vw, 18px);
+  margin-bottom: -4px;
+  color: #185baa;
+}
+
+/* Timer text: days/hours/minutes/seconds */
+.payment-timer-container > div > p:last-of-type {
+  font-size: clamp(10px, 2vw, 16px);
+  margin-top: 2px;
+  color: var(--Primary-CTA-Font, #fff);
+  font-weight: 500;
+}
+
+.payment-timer-container div span {
+  color: var(--Primary-CTA-Font, #fff);
+  font-size: clamp(10px, 2vw, 18px);
+  font-weight: 100;
+}
+
+.payment-timer-container #timer-days,
+#timer-hrs,
+#timer-mins,
+#timer-secs {
+  border-radius: 12px;
+  background: #daf8ff;
+}
+
+.payday-cta {
+  border-radius: 97.061px;
+  border: 0.485px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(
+    117deg,
+    rgba(226, 239, 255, 0.36) 0.74%,
+    rgba(226, 239, 255, 0.12) 111.76%
+  );
+  box-shadow: 0px 0px 7.765px 0px rgba(24, 91, 170, 0.24);
+  backdrop-filter: blur(3.882457971572876px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-wrap: nowrap;
+}
+
+.payday-cta > p {
+  display: block;
+  font-weight: 400;
+  color: #ffffff;
+  padding: 0 20px;
+  font-size: clamp(11px, 2vw, 14px);
+  margin: 0 auto;
+}
+
+.payday-cta > button {
+  border-radius: 97.061px;
+  background: #fff117;
+  padding: 10.824px clamp(11.647px, 3vw, 20.824px);
+  border: none;
+  font-size: clamp(11px, 2vw, 14px);
+  color: var(--PrimaryColor-Blue70, #185baa);
+  font-weight: 600;
+  min-width: 90px;
+}
+
+.payday-disclaimer {
+  font-size: clamp(5px, 1vw, 8px);
+  color: #fff;
+  font-weight: 400;
+}
+/* #payday-sale-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-height: 200px;
+  width: 1300px;
+  height: 100%;
+  background-image: url("payday-banner-bg.jpg");
+  z-index: -1;
+  border-radius: 20px;
+  background-size: 100% 100%;
+} */
