@@ -98,10 +98,6 @@ body {
   gap: 2px;
 }
 
-/* Colon separator in timer */
-.payment-timer-container > p {
-  color: var(--Primary-CTA-Font, #fff);
-}
 .payment-timer-container > div p {
   font-size: clamp(10px, 2vw, 18px);
   margin-bottom: -4px;
