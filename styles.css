@@ -19,47 +19,28 @@ body {
   width: 1300px;
   overflow: hidden;
   border-radius: clamp(8.706px, 2vw, 20px);
-  background-color: #293afb;
   gap: clamp(4px, 2vw, 8px);
-  padding: clamp(10px, 2vw, 20px) 0 6px;
-
+  padding: clamp(10px, 2vw, 18px) 0 6px;
   position: relative;
 }
 
-.payday-banner-overlay {
-  position: absolute;
-  top: 0;
-}
-/* 
-.payday-banner-overlay {
+.payday-banner-bg {
   width: 100%;
-  height: 200px;
-  position: absolute;
+  height: 100%;
+  position: absolute !important;
   top: 0;
   left: 0;
-  position: relative;
-}
-
-.payday-banner-overlay::before {
-  content: "";
-  position: absolute;
-  top: 100px;
-  left: 0;
-  width: 100%;
-  height: max-content;
   background-image: url("payday-banner-bg.jpg");
+  background-repeat: repeat;
   background-size: cover;
-  border-radius: 20px;
-  z-index: 2;
-} */
+  z-index: -1;
+}
 
+/* Image and timer container */
 #payday-sale-banner > div {
   display: flex;
   justify-content: center;
   align-items: center;
-  position: relative;
-  /* padding: ; */
-  /* padding: 24px 0; */
 }
 
 /* Left column of flex */
@@ -69,10 +50,7 @@ body {
 }
 
 #payday-sale-banner img {
-  /* width: 30vw; */
   width: clamp(145px, 28vw, 220px);
-  /* max-width: 210px;
-  min-width: 130px; */
   height: auto;
 }
 
@@ -92,7 +70,6 @@ body {
 }
 
 .payment-timer-container div {
-  /* flex-basis: 100px; */
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -113,13 +90,7 @@ body {
   font-weight: 500;
 }
 
-.payment-timer-container div span {
-  color: var(--Primary-CTA-Font, #fff);
-  font-size: clamp(10px, 2vw, 18px);
-  font-weight: 100;
-}
-
-.payment-timer-container #timer-days,
+#timer-days,
 #timer-hrs,
 #timer-mins,
 #timer-secs {
@@ -173,8 +144,8 @@ body {
 
 .payday-disclaimer {
   font-size: clamp(5px, 1vw, 8px);
-  color: #fff;
-  font-weight: 400;
+  color: #ffffff;
+  font-weight: 300;
 }
 
 @media only screen and (width<330px) {
