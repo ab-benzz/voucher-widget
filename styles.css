@@ -95,7 +95,7 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
-  gap: 8px;
+  gap: 2px;
 }
 
 /* Colon separator in timer */
@@ -130,9 +130,16 @@ body {
   background: #daf8ff;
 }
 
+/* #timer-hrs::first-letter {
+  color: red;
+  font-size: 2em;
+  font-weight: bold;
+} */
+
 .payment-timer-container > div > p:first-of-type {
   width: fit-content;
-  padding: 4px 10px;
+  padding: 4px 0;
+  width: clamp(30px, 5vw, 40px);
   margin: 0 auto;
 }
 
@@ -162,7 +169,7 @@ body {
   margin: 0 auto;
 }
 
-.payday-cta > button {
+.payday-cta > a {
   border-radius: 97.061px;
   background: #fff117;
   padding: 10.824px clamp(11.647px, 3vw, 20.824px);
@@ -171,6 +178,7 @@ body {
   color: var(--PrimaryColor-Blue70, #185baa);
   font-weight: 600;
   min-width: 90px;
+  text-decoration: none;
 }
 
 .payday-disclaimer {
