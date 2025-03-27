@@ -20,7 +20,7 @@ body {
   overflow: hidden;
   border-radius: clamp(8.706px, 2vw, 20px);
   gap: clamp(4px, 2vw, 8px);
-  padding: clamp(10px, 2vw, 18px) 0 6px;
+  padding: clamp(10px, 2vw, 15px) 0 6px;
   position: relative;
 }
 
@@ -41,6 +41,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: clamp(0px, 1vw, 18px);
 }
 
 /* Left column of flex */
@@ -148,7 +149,7 @@ body {
   font-weight: 300;
 }
 
-@media only screen and (width<330px) {
+@media screen and (width<330px) {
   #payday-sale-banner > div {
     flex-direction: column;
   }
@@ -160,5 +161,11 @@ body {
 
   #payday-sale-banner > div > div {
     margin-top: -10px;
+  }
+}
+
+@media screen and (width > 600px) {
+  #payday-sale-banner > div {
+    gap: 20px;
   }
 }
