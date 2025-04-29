@@ -17,46 +17,44 @@
 
 <body>
 
+
     <section id="payday-sale-banner">
-        <div>
-            <picture>
-                <!-- <source srcset="payday_banner_sm.png" media="(width 500px)"> -->
-                <source srcset="payday_banner_xl.png" media="(width > 600px)">
-                <img src="payday_banner_sm.png" alt="Payday Sale Banner">
-            </picture>
+        <!-- <div> -->
+        <div class="voucher-timer-div">
+            <div class="ab-img">
+                <img src="abenson_voucher_img.png" alt="">
+            </div>
 
-            <div>
-                <div class="payment-timer-container">
-                    <div>
-                        <p id="timer-days">00</p>
-                        <p>days</pp>
-                    </div>
-
-                    <div>
-                        <p id="timer-hrs">00</p>
-                        <p>hrs</p>
-                    </div>
-                    <div>
-                        <p id="timer-mins">00</p>
-                        <p>mins</p>
-                    </div>
-
-                    <div>
-                        <p id="timer-secs">00</p>
-                        <p>secs</p>
-                    </div>
+            <div class="payment-timer-container">
+                <div>
+                    <p id="timer-days">00</p>
+                    <p>days</pp>
                 </div>
 
-                <div class="payday-cta">
-                    <a href="">Shop now</a>
-                    <p>Mar 28 - 31, 2025</p>
+                <div>
+                    <p id="timer-hrs">00</p>
+                    <p>hrs</p>
+                </div>
+                <div>
+                    <p id="timer-mins">00</p>
+                    <p>mins</p>
+                </div>
+
+                <div>
+                    <p id="timer-secs">00</p>
+                    <p>secs</p>
                 </div>
             </div>
         </div>
 
-        <p class="payday-disclaimer">DTI Fair Trade Permit No. FTEB-217822 and 214255 Series of 2025.
-            Pre-order offers are valid from March 20 - 27, 2025 only.</p>
+        <picture>
+            <source srcset="payday_banner_xl.png" media="(width > 600px)">
+            <img src="payday_banner_sm.png" alt="Payday Sale Banner">
+        </picture>
 
+        <!-- </div> -->
+
+        <!-- Background image -->
         <div class="payday-banner-bg"></div>
     </section>
 
@@ -71,7 +69,7 @@
 <!-- // type="text/simi-script" -->
 <script>
     // Adjust time here (follow same format):
-    const countDownDate = new Date("March 31, 2025 23:59:59").getTime();
+    const countDownDate = new Date("July 31, 2025 23:59:59").getTime();
 
     function updateTimer() {
         const now = new Date().getTime();
@@ -92,27 +90,3 @@
     updateTimer();
     setInterval(updateTimer, 1000);
 </script>
-
-
-<!-- <script>
-    const countDownDate = new Date("March 31, 2025 23:59:59").getTime();
-
-    const x = setInterval(function () {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("timer-days").innerHTML = (days < 10) ? ('0' + days) : days;
-        document.getElementById("timer-hrs").innerHTML = (hours < 10) ? ('0' + hours) : hours;
-        document.getElementById("timer-mins").innerHTML = (minutes < 10) ? ('0' + minutes) : minutes;
-        document.getElementById("timer-secs").innerHTML = (seconds < 10) ? ('0' + seconds) : seconds;
-
-    }, 1000);
-
-    document.addEventListener('DOMContentLoaded', checkDateAndHideDiv);
-
-</script> -->

@@ -1,0 +1,224 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+body {
+  align-items: center;
+  font-family: "Poppins", serif;
+  color: #4c525c;
+  display: flex;
+  justify-content: center;
+}
+
+#payday-sale-banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1300px;
+  overflow: hidden;
+  border-radius: clamp(8.706px, 2vw, 20px);
+  gap: clamp(4px, 2vw, 8px);
+  padding: clamp(10px, 2vw, 15px) 0;
+  position: relative;
+}
+
+#payday-sale-banner p {
+  margin: 0;
+}
+
+.payday-banner-bg {
+  width: 100%;
+  height: 100%;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  /* background-image: url("payday-banner-bg.png"); */
+  background-repeat: repeat;
+  background-size: cover;
+  z-index: -1;
+  background-color: darkgray;
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
+/*  */
+
+.voucher-item {
+  width: 140.5px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 8px 16px;
+  border-radius: 16px;
+  border: none;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.voucher-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  background-color: #f16224;
+  border-radius: 12px;
+  height: 111.5px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.voucher-value {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-weight: 600;
+  position: relative;
+  width: 82%;
+  overflow-y: visible;
+  z-index: 1;
+}
+
+.voucher-value > p:first-of-type {
+  font-size: 31px;
+  line-height: 114%;
+}
+
+.voucher-value > p:last-of-type {
+  font-size: 14.5px;
+  line-height: 114%;
+}
+
+.voucher-value-bg::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-size: cover;
+  background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2295%22%20height%3D%2248%22%20viewBox%3D%220%200%2095%2048%22%20fill%3D%22none%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M6.32757%200.759277C2.99637%200.759277%200.295898%202.80688%200.295898%205.33273V20.5223C3.3932%2020.5223%205.90406%2022.4261%205.90406%2024.7746C5.90406%2027.1231%203.3932%2029.0269%200.295898%2029.0269V42.835C0.295898%2045.3609%202.99637%2047.4085%206.32757%2047.4085H88.0542C91.3854%2047.4085%2094.0859%2045.3609%2094.0859%2042.8351V29.0269C91.0006%2029.0162%2088.5038%2027.1165%2088.5038%2024.7746C88.5038%2022.4327%2091.0006%2020.533%2094.0859%2020.5223V5.33273C94.0859%202.80688%2091.3854%200.759277%2088.0542%200.759277H6.32757Z%22%20fill%3D%22white%22%20fill-opacity%3D%220.2%22/%3E%3C/svg%3E");
+}
+
+.voucher-tc {
+  color: var(--Secondary-Blue, #019bf0);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 13px 0px 0 0px;
+  background-color: rgba(255, 255, 255, 0.9);
+  width: 40px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+/*  */
+
+.voucher-btm {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.voucher-date {
+  color: var(--PrimaryTextColor-PrimaryGray40, #bcc2cd);
+  font-weight: 400;
+  line-height: 115%;
+  font-size: 12px;
+  text-wrap: nowrap;
+}
+
+.voucher-btm > strong {
+  color: var(--SecondaryColor-Blue60, #019bf0);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+}
+
+.voucher-btm > p:not(.voucher-date) {
+  color: var(--PrimaryTextColor-PrimaryGray60, #8d94a0);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 114%;
+  text-wrap: nowrap;
+  font-family: Poppins;
+}
+
+/* Modal */
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  .modal {
+    align-items: flex-end; /* Push to bottom */
+  }
+
+  .modal-content {
+    border-radius: 12px 12px 0 0;
+    transform: translateY(100%);
+    animation: slideUp 0.3s ease-out forwards;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    touch-action: pan-y;
+    transition: transform 0.2s ease;
+  }
+
+  .modal-content.swiping {
+    transition: none;
+  }
+
+  @keyframes slideUp {
+    to {
+      transform: translateY(0);
+    }
+  }
+}

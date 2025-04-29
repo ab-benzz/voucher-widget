@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="voucher.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+
+<body>
+
+
+    <section id="payday-sale-banner">
+
+        <div id="voucher-container">
+            <button class="voucher-item" data-target="#modal-a">
+                <div class="voucher-top">
+                    <img src="img/kolin_logo.png" alt="" class="voucher-logo">
+
+                    <div class="voucher-value">
+                        <p>P100</p>
+                        <p>VOUCHER</p>
+                        <div class="voucher-value-bg"></div>
+                    </div>
+
+                    <p class="voucher-tc">T&C</p>
+                </div>
+
+                <div class="voucher-btm">
+                    <p class="voucher-date">Sept 10 - Sept 20, 2025</p>
+                    <strong class="voucher-code">KOLIN100</strong>
+                    <p>
+                        See applicable brands
+                        <br>
+                        min. spend of P30,000
+                    </p>
+                </div>
+            </button>
+
+            <div id="modal-a" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <p>Voucher A Details</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Background image -->
+        <div class="payday-banner-bg"></div>
+
+        <script>
+            const buttons = document.querySelectorAll('.voucher-item');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetModal = document.querySelector(button.dataset.target);
+                    if (targetModal) {
+                        targetModal.classList.remove('hidden');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.modal').forEach(modal => {
+                const content = modal.querySelector('.modal-content');
+                const closeBtn = modal.querySelector('.close-btn');
+
+                // Close via "X" button
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        modal.classList.add('hidden');
+                    });
+                }
+
+                // Close when clicking outside content
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('hidden');
+                    }
+                });
+
+                // Swipe down to close (mobile only)
+                let startY = 0;
+                let currentY = 0;
+                let isSwiping = false;
+
+                content.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                    isSwiping = true;
+                    content.classList.add('swiping');
+                });
+
+                content.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+                    currentY = e.touches[0].clientY;
+                    const deltaY = currentY - startY;
+
+                    if (deltaY > 0) {
+                        content.style.transform = `translateY(${deltaY}px)`;
+                    }
+                });
+
+                content.addEventListener('touchend', () => {
+                    const deltaY = currentY - startY;
+
+                    content.classList.remove('swiping');
+                    content.style.transform = '';
+
+                    if (deltaY > 100) {
+                        modal.classList.add('hidden');
+                    }
+
+                    isSwiping = false;
+                });
+            });
+
+
+
+        </script>
+
+    </section>
+
+
+
+
+</body>
+
+</html>
