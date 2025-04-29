@@ -65,6 +65,93 @@
                     const targetModal = document.querySelector(button.dataset.target);
                     if (targetModal) {
                         targetModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';  // Disable body scrolling
+                    }
+                });
+            });
+
+            document.querySelectorAll('.modal').forEach(modal => {
+                const content = modal.querySelector('.modal-content');
+                const closeBtn = modal.querySelector('.close-btn');
+
+                // Close via "X" button
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', () => {
+                        content.classList.add('closing'); // Add closing animation
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            content.classList.remove('closing'); // Remove closing animation after it's done
+                            document.body.style.overflow = '';  // Re-enable body scrolling
+                        }, 300); // Timeout should match the CSS transition duration
+                    });
+                }
+
+                // Close when clicking outside content
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        content.classList.add('closing'); // Add closing animation
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            content.classList.remove('closing'); // Remove closing animation after it's done
+                            document.body.style.overflow = '';  // Re-enable body scrolling
+                        }, 300); // Timeout should match the CSS transition duration
+                    }
+                });
+
+                // Swipe down to close (mobile only)
+                let startY = 0;
+                let currentY = 0;
+                let isSwiping = false;
+
+                content.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                    isSwiping = true;
+                    content.classList.add('swiping');
+                });
+
+                content.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+
+                    currentY = e.touches[0].clientY;
+                    const deltaY = currentY - startY;
+
+                    if (deltaY > 0) {
+                        content.style.transform = `translateY(${deltaY}px)`;
+                    }
+
+                    // Prevent default page scroll
+                    e.preventDefault();
+                });
+
+                content.addEventListener('touchend', () => {
+                    const deltaY = currentY - startY;
+
+                    content.classList.remove('swiping');
+                    content.style.transform = '';
+
+                    if (deltaY > 100) {
+                        content.classList.add('closing'); // Add closing animation on swipe
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            content.classList.remove('closing'); // Remove closing animation after it's done
+                            document.body.style.overflow = '';  // Re-enable body scrolling
+                        }, 300); // Timeout should match the CSS transition duration
+                    }
+
+                    isSwiping = false;
+                });
+            });
+
+        </script>
+        <!-- 
+        <script>
+            const buttons = document.querySelectorAll('.voucher-item');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetModal = document.querySelector(button.dataset.target);
+                    if (targetModal) {
+                        targetModal.classList.remove('hidden');
                     }
                 });
             });
@@ -124,7 +211,7 @@
 
 
 
-        </script>
+        </script> -->
 
     </section>
 
