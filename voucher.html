@@ -59,95 +59,8 @@
 
         <!-- Background image -->
         <div class="payday-banner-bg"></div>
-        <!-- <script>
-
-            const buttons = document.querySelectorAll('.voucher-item');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetModal = document.querySelector(button.dataset.target);
-                    if (targetModal) {
-                        targetModal.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden';  // Disable body scrolling
-                    }
-                });
-            });
-
-            document.querySelectorAll('.modal').forEach(modal => {
-                const content = modal.querySelector('.modal-content');
-                const closeBtn = modal.querySelector('.close-btn');
-
-                // Close via "X" button
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
-                        content.classList.add('closing'); // Add closing animation
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            content.classList.remove('closing'); // Remove closing animation after it's done
-                            document.body.style.overflow = '';  // Re-enable body scrolling
-                        }, 300); // Timeout should match the CSS transition duration
-                    });
-                }
-
-                // Close when clicking outside content
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        content.classList.add('closing'); // Add closing animation
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            content.classList.remove('closing'); // Remove closing animation after it's done
-                            document.body.style.overflow = '';  // Re-enable body scrolling
-                        }, 300); // Timeout should match the CSS transition duration
-                    }
-                });
-
-                // Swipe down to close (mobile only)
-                let startY = 0;
-                let currentY = 0;
-                let isSwiping = false;
-
-                content.addEventListener('touchstart', (e) => {
-                    startY = e.touches[0].clientY;
-                    isSwiping = true;
-                    content.classList.add('swiping');
-                });
-
-                content.addEventListener('touchmove', (e) => {
-                    if (!isSwiping) return;
-
-                    currentY = e.touches[0].clientY;
-                    const deltaY = currentY - startY;
-
-                    if (deltaY > 0) {
-                        content.style.transform = `translateY(${deltaY}px)`;
-                    }
-
-                    // Prevent default page scroll
-                    e.preventDefault();
-                });
-
-                content.addEventListener('touchend', () => {
-                    const deltaY = currentY - startY;
-
-                    content.classList.remove('swiping');
-                    content.style.transform = '';
-
-                    if (deltaY > 100) {
-                        content.classList.add('closing'); // Add closing animation on swipe
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            content.classList.remove('closing'); // Remove closing animation after it's done
-                            document.body.style.overflow = '';  // Re-enable body scrolling
-                        }, 300); // Timeout should match the CSS transition duration
-                    }
-
-                    isSwiping = false;
-                });
-            });
 
 
-        </script> -->
-        <!-- 
         <script>
             const buttons = document.querySelectorAll('.voucher-item');
 
@@ -172,37 +85,44 @@
                     content.style.transition = '';
                     content.style.transform = '';
                     content.style.opacity = '';
-                    content.addEventListener('animationend', () => {
+
+                    const handleClose = () => {
                         modal.classList.add('hidden');
                         content.classList.remove('slide-down');
-                    }, { once: true });
+                        content.removeEventListener('animationend', handleClose);
+                        content.removeEventListener('transitionend', handleClose);
+                    };
+
+                    content.addEventListener('animationend', handleClose, { once: true });
+                    content.addEventListener('transitionend', handleClose, { once: true });
                 };
 
+                // Swipe gesture (mobile)
                 content.addEventListener('touchstart', (e) => {
                     startY = e.touches[0].clientY;
                     isSwiping = true;
-                    content.style.transition = ''; // Remove previous transitions
+                    content.style.transition = '';
                 });
 
                 content.addEventListener('touchmove', (e) => {
                     if (!isSwiping) return;
-                    e.preventDefault(); // Prevent scrolling of the whole page
+                    e.preventDefault(); // Prevent page scroll
                     currentY = e.touches[0].clientY;
                     const deltaY = currentY - startY;
                     if (deltaY > 0) {
-                        const resistance = Math.min(deltaY, 300); // Cap drag effect
+                        const resistance = Math.min(deltaY, 300);
                         const opacity = Math.max(1 - resistance / 300, 0.7);
                         const scale = Math.max(1 - resistance / 1000, 0.95);
                         content.style.transform = `translateY(${resistance}px) scale(${scale})`;
                         content.style.opacity = opacity;
-                        document.body.style.overflow = 'hidden'; // Prevent background scroll
+                        document.body.style.overflow = 'hidden';
                     }
-                }, { passive: false }); // Ensure preventDefault works
+                }, { passive: false });
 
                 content.addEventListener('touchend', () => {
                     const deltaY = currentY - startY;
                     isSwiping = false;
-                    document.body.style.overflow = ''; // Restore scroll
+                    document.body.style.overflow = '';
 
                     if (deltaY > 100) {
                         closeModal();
@@ -216,74 +136,22 @@
                     }
                 });
 
+                // Close with X button
                 modal.querySelector('.close-btn').addEventListener('click', closeModal);
 
+                // Close on backdrop click
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) closeModal();
                 });
-            });
-        </script> -->
 
-        <!-- <script>
-            const buttons = document.querySelectorAll('.voucher-item');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetModal = document.querySelector(button.dataset.target);
-                    if (targetModal) {
-                        targetModal.classList.remove('hidden');
+                // Close on ESC key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                        closeModal();
                     }
                 });
             });
-
-            // Close logic with slide-down animation
-            document.querySelectorAll('.modal').forEach(modal => {
-                const content = modal.querySelector('.modal-content');
-
-                const closeModal = () => {
-                    content.classList.add('slide-down');
-                    content.addEventListener('animationend', () => {
-                        modal.classList.add('hidden');
-                        content.classList.remove('slide-down');
-                    }, { once: true });
-                };
-
-                modal.querySelector('.close-btn').addEventListener('click', closeModal);
-
-                // Optional: close if clicking outside content
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) closeModal();
-                });
-            });
-        </script> -->
-
-        <!-- 
-        <script>
-            const buttons = document.querySelectorAll('.voucher-item');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const targetModal = document.querySelector(button.dataset.target);
-                    if (targetModal) {
-                        targetModal.classList.remove('hidden');
-                    }
-                });
-            });
-
-            // Close buttons for all modals
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.querySelector('.close-btn').addEventListener('click', () => {
-                    modal.classList.add('hidden');
-                });
-
-                // Optional: close if clicking outside content
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.add('hidden');
-                    }
-                });
-            });
-        </script> -->
+        </script>
 
     </section>
 
