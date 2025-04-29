@@ -68,6 +68,15 @@
                 button.addEventListener('click', () => {
                     const targetModal = document.querySelector(button.dataset.target);
                     if (targetModal) {
+                        const content = targetModal.querySelector('.modal-content');
+
+                        // Reset styles and classes in case it was closed previously
+                        content.classList.remove('closing', 'slide-down');
+                        content.style.transition = '';
+                        content.style.transform = '';
+                        content.style.opacity = '';
+
+                        // Show modal
                         targetModal.classList.remove('hidden');
                     }
                 });
@@ -79,16 +88,16 @@
                 let startY = 0;
                 let currentY = 0;
                 let isSwiping = false;
-
                 const closeModal = () => {
-                    content.classList.add('slide-down');
-                    content.style.transition = '';
-                    content.style.transform = '';
-                    content.style.opacity = '';
+                    const modalContent = content;
+                    modalContent.classList.add('closing'); // Add the closing class to trigger sliding down
+                    content.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
+                    content.style.transform = 'translateY(100%)'; // Slide down effect
+                    content.style.opacity = '0';
 
                     const handleClose = () => {
                         modal.classList.add('hidden');
-                        content.classList.remove('slide-down');
+                        modalContent.classList.remove('closing'); // Remove closing class after the animation ends
                         content.removeEventListener('animationend', handleClose);
                         content.removeEventListener('transitionend', handleClose);
                     };
@@ -138,6 +147,12 @@
 
                 // Close with X button
                 modal.querySelector('.close-btn').addEventListener('click', closeModal);
+
+
+                // Close on backdrop click
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
+                });
 
                 // Close on backdrop click
                 modal.addEventListener('click', (e) => {
