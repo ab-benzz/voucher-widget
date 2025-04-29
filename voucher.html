@@ -49,6 +49,9 @@
                 <div class="modal-content">
                     <span class="close-btn">&times;</span>
                     <p>Voucher A Details</p>
+                    <p>Voucher A Details</p>
+
+                    <p>Voucher A Details</p>
                 </div>
             </div>
         </div>
@@ -65,84 +68,31 @@
                     const targetModal = document.querySelector(button.dataset.target);
                     if (targetModal) {
                         targetModal.classList.remove('hidden');
-                        document.body.style.overflow = 'hidden';  // Disable body scrolling
                     }
                 });
             });
 
+            // Close logic with slide-down animation
             document.querySelectorAll('.modal').forEach(modal => {
                 const content = modal.querySelector('.modal-content');
-                const closeBtn = modal.querySelector('.close-btn');
 
-                // Close via "X" button
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
-                        content.classList.add('closing'); // Add closing animation
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            content.classList.remove('closing'); // Remove closing animation after it's done
-                            document.body.style.overflow = '';  // Re-enable body scrolling
-                        }, 300); // Timeout should match the CSS transition duration
-                    });
-                }
+                const closeModal = () => {
+                    content.classList.add('slide-down');
+                    content.addEventListener('animationend', () => {
+                        modal.classList.add('hidden');
+                        content.classList.remove('slide-down');
+                    }, { once: true });
+                };
 
-                // Close when clicking outside content
+                modal.querySelector('.close-btn').addEventListener('click', closeModal);
+
+                // Optional: close if clicking outside content
                 modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        content.classList.add('closing'); // Add closing animation
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            content.classList.remove('closing'); // Remove closing animation after it's done
-                            document.body.style.overflow = '';  // Re-enable body scrolling
-                        }, 300); // Timeout should match the CSS transition duration
-                    }
-                });
-
-                // Swipe down to close (mobile only)
-                let startY = 0;
-                let currentY = 0;
-                let isSwiping = false;
-
-                content.addEventListener('touchstart', (e) => {
-                    startY = e.touches[0].clientY;
-                    isSwiping = true;
-                    content.classList.add('swiping');
-                });
-
-                content.addEventListener('touchmove', (e) => {
-                    if (!isSwiping) return;
-
-                    currentY = e.touches[0].clientY;
-                    const deltaY = currentY - startY;
-
-                    if (deltaY > 0) {
-                        content.style.transform = `translateY(${deltaY}px)`;
-                    }
-
-                    // Prevent default page scroll
-                    e.preventDefault();
-                });
-
-                content.addEventListener('touchend', () => {
-                    const deltaY = currentY - startY;
-
-                    content.classList.remove('swiping');
-                    content.style.transform = '';
-
-                    if (deltaY > 100) {
-                        content.classList.add('closing'); // Add closing animation on swipe
-                        setTimeout(() => {
-                            modal.classList.add('hidden');
-                            content.classList.remove('closing'); // Remove closing animation after it's done
-                            document.body.style.overflow = '';  // Re-enable body scrolling
-                        }, 300); // Timeout should match the CSS transition duration
-                    }
-
-                    isSwiping = false;
+                    if (e.target === modal) closeModal();
                 });
             });
-
         </script>
+
         <!-- 
         <script>
             const buttons = document.querySelectorAll('.voucher-item');
@@ -156,61 +106,19 @@
                 });
             });
 
+            // Close buttons for all modals
             document.querySelectorAll('.modal').forEach(modal => {
-                const content = modal.querySelector('.modal-content');
-                const closeBtn = modal.querySelector('.close-btn');
+                modal.querySelector('.close-btn').addEventListener('click', () => {
+                    modal.classList.add('hidden');
+                });
 
-                // Close via "X" button
-                if (closeBtn) {
-                    closeBtn.addEventListener('click', () => {
-                        modal.classList.add('hidden');
-                    });
-                }
-
-                // Close when clicking outside content
+                // Optional: close if clicking outside content
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.classList.add('hidden');
                     }
                 });
-
-                // Swipe down to close (mobile only)
-                let startY = 0;
-                let currentY = 0;
-                let isSwiping = false;
-
-                content.addEventListener('touchstart', (e) => {
-                    startY = e.touches[0].clientY;
-                    isSwiping = true;
-                    content.classList.add('swiping');
-                });
-
-                content.addEventListener('touchmove', (e) => {
-                    if (!isSwiping) return;
-                    currentY = e.touches[0].clientY;
-                    const deltaY = currentY - startY;
-
-                    if (deltaY > 0) {
-                        content.style.transform = `translateY(${deltaY}px)`;
-                    }
-                });
-
-                content.addEventListener('touchend', () => {
-                    const deltaY = currentY - startY;
-
-                    content.classList.remove('swiping');
-                    content.style.transform = '';
-
-                    if (deltaY > 100) {
-                        modal.classList.add('hidden');
-                    }
-
-                    isSwiping = false;
-                });
             });
-
-
-
         </script> -->
 
     </section>
