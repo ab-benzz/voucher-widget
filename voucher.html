@@ -45,6 +45,32 @@
                 </div>
             </button>
 
+            <button class="voucher-item" data-target="#modal-b">
+                <div class="voucher-top">
+                    <img src="img/kolin_logo.png" alt="" class="voucher-logo">
+
+                    <div class="voucher-value">
+                        <p>P100</p>
+                        <p>VOUCHER</p>
+                        <div class="voucher-value-bg"></div>
+                    </div>
+
+                    <p class="voucher-tc">T&C</p>
+                </div>
+
+                <div class="voucher-btm">
+                    <p class="voucher-date">Sept 10 - Sept 20, 2025</p>
+                    <strong class="voucher-code">KOLIN100</strong>
+                    <p>
+                        See applicable brands
+                        <br>
+                        min. spend of P30,000
+                    </p>
+                </div>
+            </button>
+        </div>
+
+        <div class="modal-container">
             <div id="modal-a" class="modal hidden">
                 <div class="modal-content">
                     <span class="close-btn">&times;</span>
@@ -52,6 +78,15 @@
                     <p>Voucher A Details</p>
 
                     <p>Voucher A Detailssshoney</p>
+                </div>
+            </div>
+            <div id="modal-b" class="modal hidden">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <p>Modal B</p>
+                    <p>Modal B</p>
+                    <p>Modal B</p>
+
                 </div>
             </div>
         </div>
@@ -76,8 +111,15 @@
                         content.style.transform = '';
                         content.style.opacity = '';
 
-                        // Show modal
+
+                        // Show modal and trigger slide-in animation
                         targetModal.classList.remove('hidden');
+                        content.classList.add('slide-in');
+
+                        // Remove the animation class after it runs once
+                        content.addEventListener('animationend', () => {
+                            content.classList.remove('slide-in');
+                        }, { once: true });
                     }
                 });
             });
@@ -122,7 +164,7 @@
                         const resistance = Math.min(deltaY, 300);
                         const opacity = Math.max(1 - resistance / 300, 0.7);
                         const scale = Math.max(1 - resistance / 1000, 0.95);
-                        content.style.transform = `translateY(${resistance}px) scale(${scale})`;
+                        content.style.transform = `translateY(${resistance}px) scale(${scale})`; // remove scale if ayaw lumiit while dragging
                         content.style.opacity = opacity;
                         document.body.style.overflow = 'hidden';
                     }
@@ -136,7 +178,7 @@
                     if (deltaY > 100) {
                         closeModal();
                     } else {
-                        content.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+                        // content.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
                         content.style.transform = 'translateY(0) scale(1)';
                         content.style.opacity = '1';
                         content.addEventListener('transitionend', () => {

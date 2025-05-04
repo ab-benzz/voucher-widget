@@ -196,16 +196,33 @@ body {
   cursor: pointer;
 }
 
+/*  */
+.modal-content {
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal-content.closing {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.modal-content.slide-in {
+  animation: slideIn 0.3s ease-out;
+}
+
+.modal-content.resetting {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+/* 
 @media (min-width: 768px) {
   .modal-content {
     transition: transform 0.3s ease, opacity 0.3s ease;
   }
-
-  .modal-content.slide-down {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-}
+} */
 
 @media (max-width: 767px) {
   .modal {
@@ -220,31 +237,22 @@ body {
     z-index: 9999;
   }
 
-  .modal.hidden {
-    display: none; /* Hide the modal */
-  }
-
   .modal-content {
     background: white;
     width: 100%;
     max-width: 100%;
     padding: 20px;
     border-radius: 12px 12px 0 0;
-    transition: transform 0.3s ease-out; /* Sliding transition */
-    transform: translateY(0); /* Default position */
-  }
-
-  .modal-content.closing {
-    transform: translateY(100%); /* Slide down effect when closing */
-  }
-
-  .modal-content.swiping {
-    transition: none; /* Disable transition when swiping */
   }
 }
 
-@keyframes slideUp {
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
   to {
     transform: translateY(0);
+    opacity: 1;
   }
 }
