@@ -130,14 +130,25 @@
                 let isSwiping = false;
 
                 const closeModal = () => {
+                    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
                     content.classList.add('closing');
                     content.style.opacity = '0';
+
+                    if (isMobile) {
+                        content.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                        content.style.transform = 'translateY(100%)';
+                    }
+
                     modal.classList.add('fading-out');
 
                     const handleClose = () => {
                         modal.classList.add('hidden');
                         modal.classList.remove('fading-out');
                         content.classList.remove('closing');
+                        content.style.transition = '';
+                        content.style.transform = '';
+                        content.style.opacity = '';
                         content.removeEventListener('animationend', handleClose);
                         content.removeEventListener('transitionend', handleClose);
                     };
@@ -145,6 +156,24 @@
                     content.addEventListener('animationend', handleClose, { once: true });
                     content.addEventListener('transitionend', handleClose, { once: true });
                 };
+
+
+                // const closeModal = () => {
+                //     content.classList.add('closing');
+                //     content.style.opacity = '0';
+                //     modal.classList.add('fading-out');
+
+                //     const handleClose = () => {
+                //         modal.classList.add('hidden');
+                //         modal.classList.remove('fading-out');
+                //         content.classList.remove('closing');
+                //         content.removeEventListener('animationend', handleClose);
+                //         content.removeEventListener('transitionend', handleClose);
+                //     };
+
+                //     content.addEventListener('animationend', handleClose, { once: true });
+                //     content.addEventListener('transitionend', handleClose, { once: true });
+                // };
 
                 content.addEventListener('touchstart', (e) => {
                     startY = e.touches[0].clientY;
