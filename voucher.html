@@ -102,6 +102,108 @@
             buttons.forEach(button => {
                 button.addEventListener('click', () => {
                     const targetModal = document.querySelector(button.dataset.target);
+                    if (!targetModal) return;
+
+                    const content = targetModal.querySelector('.modal-content');
+
+                    // Reset styles only if hidden
+                    if (targetModal.classList.contains('hidden')) {
+                        content.classList.remove('closing', 'slide-down');
+                        content.style.transition = '';
+                        content.style.transform = '';
+                        content.style.opacity = '';
+                    }
+
+                    targetModal.classList.remove('hidden');
+                    content.classList.add('slide-in');
+
+                    content.addEventListener('animationend', () => {
+                        content.classList.remove('slide-in');
+                    }, { once: true });
+                });
+            });
+
+            document.querySelectorAll('.modal').forEach(modal => {
+                const content = modal.querySelector('.modal-content');
+                let startY = 0;
+                let currentY = 0;
+                let isSwiping = false;
+
+                const closeModal = () => {
+                    content.classList.add('closing');
+                    content.style.opacity = '0';
+                    modal.classList.add('fading-out');
+
+                    const handleClose = () => {
+                        modal.classList.add('hidden');
+                        modal.classList.remove('fading-out');
+                        content.classList.remove('closing');
+                        content.removeEventListener('animationend', handleClose);
+                        content.removeEventListener('transitionend', handleClose);
+                    };
+
+                    content.addEventListener('animationend', handleClose, { once: true });
+                    content.addEventListener('transitionend', handleClose, { once: true });
+                };
+
+                content.addEventListener('touchstart', (e) => {
+                    startY = e.touches[0].clientY;
+                    isSwiping = true;
+                    content.style.transition = '';
+                });
+
+                content.addEventListener('touchmove', (e) => {
+                    if (!isSwiping) return;
+                    e.preventDefault(); // prevent page scroll
+                    currentY = e.touches[0].clientY;
+                    const deltaY = currentY - startY;
+
+                    if (deltaY > 0) {
+                        const resistance = Math.min(deltaY, 300);
+                        content.style.transform = `translateY(${resistance}px) scale(${Math.max(1 - resistance / 1000, 0.95)})`;
+                        content.style.opacity = Math.max(1 - resistance / 300, 0.7);
+                        document.body.style.overflow = 'hidden';
+                    }
+                }, { passive: false });
+
+                content.addEventListener('touchend', () => {
+                    const deltaY = currentY - startY;
+                    isSwiping = false;
+                    document.body.style.overflow = '';
+
+                    if (deltaY > 100) {
+                        closeModal();
+                    } else {
+                        content.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+                        content.style.transform = 'translateY(0) scale(1)';
+                        content.style.opacity = '1';
+                        content.addEventListener('transitionend', () => {
+                            content.style.transition = '';
+                        }, { once: true });
+                    }
+                });
+
+                modal.querySelector('.close-btn')?.addEventListener('click', closeModal);
+
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                        closeModal();
+                    }
+                });
+            });
+        </script>
+
+        <!-- 
+        <script>
+            const buttons = document.querySelectorAll('.voucher-item');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetModal = document.querySelector(button.dataset.target);
                     if (targetModal) {
                         const content = targetModal.querySelector('.modal-content');
 
@@ -130,22 +232,27 @@
                 let startY = 0;
                 let currentY = 0;
                 let isSwiping = false;
+
                 const closeModal = () => {
                     const modalContent = content;
-                    modalContent.classList.add('closing'); // Add the closing class to trigger sliding down
-                    content.style.transition = 'transform 0.3s ease-out, opacity 0.3s ease-out';
-                    content.style.transform = 'translateY(100%)'; // Slide down effect
+                    modalContent.classList.add('closing');
                     content.style.opacity = '0';
+
+                    // Add fade-out class to backdrop
+                    modal.classList.add('fading-out');
 
                     const handleClose = () => {
                         modal.classList.add('hidden');
-                        modalContent.classList.remove('closing'); // Remove closing class after the animation ends
+                        modal.classList.remove('fading-out');
+                        modalContent.classList.remove('closing');
                         content.removeEventListener('animationend', handleClose);
                         content.removeEventListener('transitionend', handleClose);
+                        modal.removeEventListener('animationend', handleClose); // add this line
                     };
 
                     content.addEventListener('animationend', handleClose, { once: true });
                     content.addEventListener('transitionend', handleClose, { once: true });
+                    modal.addEventListener('animationend', handleClose, { once: true }); // listen for fadeOut end
                 };
 
                 // Swipe gesture (mobile)
@@ -208,7 +315,7 @@
                     }
                 });
             });
-        </script>
+        </script> -->
 
     </section>
 

@@ -203,11 +203,6 @@ body {
   opacity: 1;
 }
 
-.modal-content.closing {
-  transform: translateY(100%);
-  opacity: 0;
-}
-
 .modal-content.slide-in {
   animation: slideIn 0.3s ease-out;
 }
@@ -217,12 +212,17 @@ body {
   transform: translateY(0) scale(1);
   opacity: 1;
 }
-/* 
+.modal.fading-out {
+  animation: fadeOut 0.8s ease-out;
+}
+
 @media (min-width: 768px) {
-  .modal-content {
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  .modal-content.closing {
+    /* transform: translateY(100%); */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0;
   }
-} */
+}
 
 @media (max-width: 767px) {
   .modal {
@@ -244,6 +244,30 @@ body {
     padding: 20px;
     border-radius: 12px 12px 0 0;
   }
+
+  .modal-content.closing {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* Desktop-specific styles */
+@media (min-width: 768px) {
+  .modal {
+    animation: fadeIn 0.3s ease-out; /* Fade in effect */
+  }
+
+  .modal-content {
+    transition: opacity 0.3s ease-out; /* No slide effect on desktop */
+  }
+
+  .modal-content.closing {
+    opacity: 0; /* Fade out */
+  }
+
+  .modal-content.slide-in {
+    animation: fadeIn 0.3s ease-out; /* Fade in effect */
+  }
 }
 
 @keyframes slideIn {
@@ -254,5 +278,23 @@ body {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
