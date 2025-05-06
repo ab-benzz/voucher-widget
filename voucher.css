@@ -1,52 +1,14 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-body {
-  align-items: center;
-  font-family: "Poppins", serif;
-  color: #4c525c;
+#voucher-container {
   display: flex;
-  justify-content: center;
-}
-
-#payday-sale-banner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 1300px;
-  overflow: hidden;
-  border-radius: clamp(8.706px, 2vw, 20px);
-  gap: clamp(4px, 2vw, 8px);
-  padding: clamp(10px, 2vw, 15px) 0;
-  position: relative;
-}
-
-#payday-sale-banner p {
-  margin: 0;
-}
-
-.payday-banner-bg {
+  gap: clamp(8px, 2vw, 10px);
+  overflow: scroll;
+  overflow: scroll;
   width: 100%;
-  height: 100%;
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  /* background-image: url("payday-banner-bg.png"); */
-  background-repeat: repeat;
-  background-size: cover;
-  z-index: -1;
-  background-color: darkgray;
 }
 
-/*  */
-/*  */
-/*  */
-/*  */
-/*  */
-
+#voucher-container::-webkit-scrollbar {
+  display: none;
+}
 .voucher-item {
   width: 140.5px;
   background-color: #ffffff;
@@ -62,16 +24,21 @@ body {
 }
 
 .voucher-top {
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   padding-top: 8px;
-  background-color: #f16224;
+  /* background-color: #f16224; */
   border-radius: 12px;
   height: 111.5px;
   width: 100%;
   position: relative;
   overflow: hidden;
+
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  grid-template-rows: 30% 70%;
 }
 
 .voucher-value {
@@ -149,13 +116,14 @@ body {
   font-style: normal;
   font-weight: 600;
   line-height: 100%;
+  margin: 2px 0;
 }
 
 .voucher-btm > p:not(.voucher-date) {
   color: var(--PrimaryTextColor-PrimaryGray60, #8d94a0);
   font-weight: 400;
   font-size: 11px;
-  line-height: 114%;
+  line-height: 95%;
   text-wrap: nowrap;
   font-family: Poppins;
 }
@@ -178,7 +146,9 @@ body {
 .modal.hidden {
   display: none;
 }
-
+.modal-container {
+  position: absolute;
+}
 .modal-content {
   background: white;
   padding: 20px;
@@ -216,7 +186,7 @@ body {
   animation: fadeOut 0.8s ease-out;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 869px) {
   .modal-content.closing {
     /* transform: translateY(100%); */
     transition: transform 0.2s ease, opacity 0.2s ease;
@@ -224,7 +194,7 @@ body {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 869px) {
   .modal {
     position: fixed;
     top: 0;
@@ -252,7 +222,7 @@ body {
 }
 
 /* Desktop-specific styles */
-@media (min-width: 768px) {
+@media (min-width: 869px) {
   .modal {
     animation: fadeIn 0.3s ease-out; /* Fade in effect */
   }
@@ -267,6 +237,30 @@ body {
 
   .modal-content.slide-in {
     animation: fadeIn 0.3s ease-out; /* Fade in effect */
+  }
+
+  #voucher-container {
+    padding: 16px;
+    height: 236px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: linear-gradient(
+      117deg,
+      rgba(226, 239, 255, 0.36) 0.74%,
+      rgba(226, 239, 255, 0.12) 111.76%
+    );
+
+    box-shadow: 0px 0px 16px 0px rgba(24, 91, 170, 0.24);
+    backdrop-filter: blur(8px);
+  }
+
+  .voucher-timer-div {
+    height: 236px;
+  }
+
+  .voucher-timer-div > div {
+    height: 100%;
+    position: relative;
   }
 }
 
