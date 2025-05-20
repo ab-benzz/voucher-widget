@@ -49,12 +49,30 @@
         </div>
 
 
-        <div id="">
-            <div id="voucher-container"></div>
+        <div>
+            <div id="voucher-container">
+                <button class="voucher-button" id="scroll-next">test</button>
+                <!-- <div class="voucher-fade-right"></div> -->
+            </div>
+
+
             <div class="modal-container"></div>
+
+
 
             <div class="payday-banner-bg"></div>
 
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.getElementById("scroll-next").addEventListener("click", function () {
+                        const container = document.getElementById("voucher-container");
+                        const scrollAmount = container.clientWidth * 0.8; // scroll 80% of visible width
+                        container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                        console.log("clicked");
+                    });
+
+                });
+            </script>
 
             <script src="voucher.js"></script>
 

@@ -78,6 +78,99 @@ const vouchers = [
     modalContent:
       "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
   },
+  {
+    id: "",
+    logoSrc: "img/kolin_logo.png",
+    value: "P300",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "BENZPOGI",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher C Details",
+    backgroundColor: "red",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
+  {
+    id: "b",
+    logoSrc: "img/samsung_logo.png",
+    value: "P200",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "SAMSUNG100",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher B Details",
+    backgroundColor: "#1528A1",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
+  {
+    id: "c",
+    logoSrc: "img/kolin_logo.png",
+    value: "P300",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "BENZPOGI",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher C Details",
+    backgroundColor: "#00925F",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
+
+  {
+    id: "d",
+    logoSrc: "img/kolin_logo.png",
+    value: "P300",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "BENZPOGI",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher C Details",
+    backgroundColor: "#00925F",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
+
+  {
+    id: "d",
+    logoSrc: "img/kolin_logo.png",
+    value: "P300",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "BENZPOGI",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher C Details",
+    backgroundColor: "#00925F",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
+  {
+    id: "d",
+    logoSrc: "img/kolin_logo.png",
+    value: "P300",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "BENZPOGI",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher C Details",
+    backgroundColor: "red",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
+  {
+    id: "",
+    logoSrc: "img/kolin_logo.png",
+    value: "P300",
+    dateRange: "Oct 1 - Oct 10, 2025",
+    code: "BENZPOGI",
+    terms1: "See applicable items",
+    terms2: " min. spend of P50,000",
+    modalTitle: "Voucher C Details",
+    backgroundColor: "red",
+    modalContent:
+      "Voucher B: Enjoy a P200 discount when you spend more than P50,000!",
+  },
 ];
 
 function withDefaults(voucher) {

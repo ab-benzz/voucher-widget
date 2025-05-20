@@ -50,7 +50,7 @@ body {
 }
 
 .payment-timer-container {
-  gap: clamp(3px, 3vw, 20px);
+  gap: clamp(3px, 2vw, 20px);
   max-height: 91px;
   padding: 0 clamp(8px, 5vw, 30px);
 }
@@ -144,7 +144,7 @@ body {
 
   #payday-sale-banner {
     display: grid;
-    grid-template-columns: 30% 70%;
+    grid-template-columns: 35% 65%;
     padding: clamp(10px, 2vw, 15px) clamp(20px, 10vw, 60px);
     gap: 10px;
   }
