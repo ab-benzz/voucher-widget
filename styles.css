@@ -46,7 +46,7 @@ body {
   justify-content: center;
   gap: clamp(4px, 2vw, 8px);
   width: 100%;
-  padding: 0 16px;
+  padding: 0 clamp(8px, 2vw, 16px);
 }
 
 .payment-timer-container {
@@ -65,7 +65,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  height: clamp(60px, 12vw, 120px);
+  height: clamp(60px, 12vw, 95px);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   background: linear-gradient(
@@ -150,8 +150,12 @@ body {
   }
 
   #payday-sale-banner > div {
-    width: unset;
+    /* width: unset; */
     padding: unset;
     flex: 1;
+  }
+
+  .test-cont {
+    width: 100% !important;
   }
 }
