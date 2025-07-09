@@ -4,26 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ver2</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="voucher.css">
-
-
+    <title>ver3 voucher carousel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
+    <link rel="stylesheet" href="carousel.css">
+    <link rel="stylesheet" href="cardsmodal.css">
 </head>
 
 <body>
+    <!-- Voucher Carousel - Editable Content Arrays -->
+
 
 
     <section id="payday-sale-banner">
         <div class="voucher-timer-div">
             <div class="ab-img">
-                <img src="abenson_voucher_img.png" alt="">
+                <!-- <img src="https://ab-benzz.github.io/voucher-widget/abenson_voucher_img.png" alt=""> -->
+                <h2>
+                    Abenson <span>Birthday Vouchers</span>
+                </h2>
             </div>
 
             <div class="payment-timer-container">
@@ -50,15 +53,12 @@
 
         <div class="test-cont">
             <button class="voucher-button" id="scroll-next">
-                <svg fill="#343d6e" height="33px" width="33.2px" version="1.1" id="Layer_1"
+                <svg fill="#767676" height="33px" width="33.2px" version="1.1" id="Layer_1"
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                     xml:space="preserve">
                     <g>
                         <g>
                             <g>
-                                <path d="M256,0C114.618,0,0,114.618,0,256s114.618,256,256,256s256-114.618,256-256S397.382,0,256,0z M256,469.333
-				c-117.818,0-213.333-95.515-213.333-213.333S138.182,42.667,256,42.667S469.333,138.182,469.333,256S373.818,469.333,256,469.333
-				z" />
                                 <path d="M228.418,134.248c-8.331-8.331-21.839-8.331-30.17,0c-8.331,8.331-8.331,21.839,0,30.17L289.83,256l-91.582,91.582
 				c-8.331,8.331-8.331,21.839,0,30.17c8.331,8.331,21.839,8.331,30.17,0l106.667-106.667c8.331-8.331,8.331-21.839,0-30.17
 				L228.418,134.248z" />
@@ -71,15 +71,12 @@
             <div id="voucher-container">
             </div>
             <button class="voucher-button" id="scroll-prev">
-                <svg fill="#343d6e" height="33px" width="33.2px" version="1.1" id="Layer_1"
+                <svg fill="#767676" height="33px" width="33.2px" version="1.1" id="Layer_1"
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                     xml:space="preserve">
                     <g>
                         <g>
                             <g>
-                                <path d="M256,0C114.618,0,0,114.618,0,256s114.618,256,256,256s256-114.618,256-256S397.382,0,256,0z M256,469.333
-				c-117.818,0-213.333-95.515-213.333-213.333S138.182,42.667,256,42.667S469.333,138.182,469.333,256S373.818,469.333,256,469.333
-				z" />
                                 <path d="M313.752,134.248c-8.331-8.331-21.839-8.331-30.17,0L176.915,240.915c-8.331,8.331-8.331,21.839,0,30.17l106.667,106.667
 				c8.331,8.331,21.839,8.331,30.17,0c8.331-8.331,8.331-21.839,0-30.17L222.17,256l91.582-91.582
 				C322.083,156.087,322.083,142.58,313.752,134.248z" />
@@ -99,94 +96,103 @@
         <div>
             <div class="modal-container"></div>
 
-            <!-- Voucher Button Scroll -->
             <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const container = document.getElementById("voucher-container");
-                    const btnPrev = document.getElementById("scroll-prev");
-                    const btnNext = document.getElementById("scroll-next");
-                    const fadeRight = document.querySelector(".voucher-fade-right"); // your fade element
-                    const scrollAmount = container.clientWidth * 0.9;
+                const container = document.getElementById("voucher-container");
+                const btnPrev = document.getElementById("scroll-prev");
+                const btnNext = document.getElementById("scroll-next");
+                const fadeRight = document.querySelector(".voucher-fade-right");
+                const scrollAmount = container.clientWidth * 0.9;
 
-                    function updateUI() {
-                        const maxScrollLeft = container.scrollWidth - container.clientWidth;
-                        const atStart = container.scrollLeft <= 0;
-                        const atEnd = container.scrollLeft >= maxScrollLeft - 1;
+                btnPrev.classList.add("disabled");
 
-                        // Button states
-                        btnPrev.classList.toggle("disabled", atStart);
-                        btnNext.classList.toggle("disabled", atEnd);
+                function updateUI() {
+                    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+                    const scrollLeft = container.scrollLeft;
+                    const hasOverflow = container.scrollWidth > container.clientWidth;
 
-                        // Fade visibility
-                        if (fadeRight) {
-                            fadeRight.classList.toggle("visible", !atEnd && container.scrollWidth > container.clientWidth);
-                        }
+                    const atStart = scrollLeft <= 0;
+                    const atEnd = scrollLeft >= maxScrollLeft - 5;
+
+                    // Only show scroll-next initially if overflow exists
+                    btnPrev.classList.toggle("disabled", true); // always hide prev on first load
+                    btnNext.classList.toggle("disabled", !hasOverflow); // show next if needed
+
+                    // Adjust buttons on scroll
+                    if (!atStart) {
+                        btnPrev.classList.remove("disabled");
+                    }
+                    if (atEnd) {
+                        btnNext.classList.add("disabled");
                     }
 
-                    // Event listeners
-                    container.addEventListener("scroll", updateUI);
-                    window.addEventListener("resize", updateUI);
+                    // Fade effect
+                    if (fadeRight) {
+                        fadeRight.classList.toggle("visible", hasOverflow && !atEnd);
+                    }
+                }
 
-                    btnNext.addEventListener("click", function () {
-                        container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-                    });
+                // Event listeners
+                container.addEventListener("scroll", updateUI);
+                window.addEventListener("resize", updateUI);
 
-                    btnPrev.addEventListener("click", function () {
-                        container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-                    });
-
-                    // Initial setup
-                    updateUI();
+                btnNext.addEventListener("click", () => {
+                    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
                 });
 
+                btnPrev.addEventListener("click", () => {
+                    container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+                });
+
+                // Run after DOM and images are fully loaded
+                window.addEventListener("load", () => {
+                    requestAnimationFrame(updateUI);
+                });
             </script>
 
-            <!-- <script src="voucher.js"></script> -->
 
+            <!-- Edit Arrays Here -->
             <script>
                 const vouchers = [
                     //
                     // 1st voucher
                     {
-                        id: "A",
-                        logoSrc: "img/kolin_logo.png",
+                        id: "BDAY1000",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_1000.jpg",
                         value: "P300",
-                        dateRange: "Oct 1 - Oct 10, 2025",
-                        code: "BENZPOGI",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY1000",
                         terms1: "See applicable items",
-                        terms2: "min. spend of P50,000",
-                        backgroundColor: "blue",
+                        terms2: " ",
                         // Modals:
-                        modalTitle: "Voucher Test",
-                        modalDate: "June 27 - 30, 2025",
+                        modalTitle: "BDAY1000",
+                        modalDate: "July 1 - 15, 2025",
                         modalSections: [
                             {
-                                contentType: "list",
+                                contentType: "links",
                                 title:
-                                    "Get up to P300 OFF with a minimum purchase of P50,000 on all applicable brands",
+                                    "Get up to P1000 OFF with a minimum purchase of P50,000 on all applicable brands",
                                 content: [
-                                    "Midea Small Appliance",
-                                    "Dowell Small Appliance",
-                                    "Samsung Small Appliance",
-                                    "Panasonic Small Appliance",
+                                    { text: "LG", href: "https://www.abenson.com/brands/lg" },
+                                    { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
+                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
+                                    { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                                    { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                                    { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
+                                    { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
+                                    { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
+                                    { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
+                                    { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
+                                    { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
+                                    { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
                                 ],
                             },
                             {
                                 contentType: "links",
                                 title: "Where to avail",
                                 content: [
-                                    { text: "LG", href: "https://www.abenson.com" },
-                                    { text: "Samsung TVs", href: "https://www.abenson.com" },
-                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com" },
-                                    { text: "Samsung Aircons", href: "https://www.abenson.com" },
-                                    { text: "Panasonic", href: "https://www.abenson.com" },
-                                    { text: "TCL", href: "https://www.abenson.com" },
-                                    { text: "Whirlpool", href: "https://www.abenson.com" },
-                                    { text: "Fujidenzo", href: "https://www.abenson.com" },
-                                    { text: "Condura Home Appliances", href: "https://www.abenson.com" },
-                                    { text: "Kolin", href: "https://www.abenson.com" },
-                                    { text: "Skyworth", href: "https://www.abenson.com" },
-                                    { text: "Carrier", href: "https://www.abenson.com" }
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
                                 ],
                             },
                             {
@@ -199,40 +205,46 @@
                                 ],
                             },
                         ],
-                    },
+                    },//end of 1st voucher
                     //
                     // 2nd voucher
                     {
-                        id: "B",
-                        logoSrc: "img/kolin_logo.png",
+                        id: "BDAY500",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_500.jpg",
                         value: "P500",
-                        dateRange: "Oct 1 - Oct 10, 2025",
-                        code: "BENZPOGI",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY500",
                         terms1: "See applicable items",
-                        terms2: "min. spend of P50,000",
-                        backgroundColor: "orange",
+                        terms2: " ",
+
                         // Modals:
-                        modalTitle: "Voucher Test",
-                        modalDate: "June 27 - 30, 2025",
+                        modalTitle: "BDAY500",
+                        modalDate: "July 1 - 15, 2025",
                         modalSections: [
                             {
-                                contentType: "list",
+                                contentType: "links",
                                 title:
-                                    "Get up to P300 OFF with a minimum purchase of P50,000 on all applicable brands",
+                                    "Get up to P500 OFF with a minimum purchase of P50,000 on all applicable brands",
                                 content: [
-                                    "Midea Small Appliance",
-                                    "Dowell Small Appliance",
-                                    "Samsung Small Appliance",
-                                    "Panasonic Small Appliance",
+                                    { text: "LG", href: "https://www.abenson.com/brands/lg" },
+                                    { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
+                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
+                                    { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                                    { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                                    { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
+                                    { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
+                                    { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
+                                    { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
+                                    { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
                                 ],
                             },
                             {
                                 contentType: "links",
                                 title: "Where to avail",
                                 content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com" },
-                                    { text: "Abenson Viber Community", href: "#" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:0288118811" },
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
                                 ],
                             },
                             {
@@ -245,40 +257,36 @@
                                 ],
                             },
                         ],
-                    },
+                    },//end of 2nd voucher
                     //
                     // 3rd voucher
                     {
-                        id: "C",
-                        logoSrc: "img/kolin_logo.png",
-                        value: "P300",
-                        dateRange: "Oct 1 - Oct 10, 2025",
-                        code: "BENZPOGI",
+                        id: "BDAY450",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_450.jpg",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY450",
                         terms1: "See applicable items",
-                        terms2: "min. spend of P50,000",
+                        terms2: "",
                         // Modals:
-                        modalTitle: "Voucher Test",
-                        modalDate: "June 27 - 30, 2025",
-                        backgroundColor: "red",
+                        modalTitle: "BDAY450",
+                        modalDate: "July 1 - 15, 2025",
                         modalSections: [
                             {
-                                contentType: "list",
+                                contentType: "links",
                                 title:
-                                    "Get up to P300 OFF with a minimum purchase of P50,000 on all applicable brands",
+                                    "Get up to P450 OFF with a minimum purchase of P50,000 on all applicable brands",
                                 content: [
-                                    "Midea Small Appliance",
-                                    "Dowell Small Appliance",
-                                    "Samsung Small Appliance",
-                                    "Panasonic Small Appliance",
+                                    { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
+                                    { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
                                 ],
                             },
                             {
                                 contentType: "links",
                                 title: "Where to avail",
                                 content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com" },
-                                    { text: "Abenson Viber Community", href: "#" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:0288118811" },
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
                                 ],
                             },
                             {
@@ -291,40 +299,44 @@
                                 ],
                             },
                         ],
-                    },
+                    },//end of 3rd voucher
                     //
                     // 4th voucher
                     {
-                        id: "D",
-                        logoSrc: "img/kolin_logo.png",
-                        value: "P300",
-                        dateRange: "Oct 1 - Oct 10, 2025",
-                        code: "BENZPOGI",
+                        id: "BDAY300",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_300.jpg",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY300",
                         terms1: "See applicable items",
-                        terms2: "min. spend of P50,000",
-                        backgroundColor: "red",
+                        terms2: " ",
                         // Modals:
-                        modalTitle: "Voucher Test",
-                        modalDate: "June 27 - 30, 2025",
+                        modalTitle: "BDAY300",
+                        modalDate: "July 1 - 15, 2025",
                         modalSections: [
                             {
-                                contentType: "list",
+                                contentType: "links",
                                 title:
                                     "Get up to P300 OFF with a minimum purchase of P50,000 on all applicable brands",
                                 content: [
-                                    "Midea Small Appliance",
-                                    "Dowell Small Appliance",
-                                    "Samsung Small Appliance",
-                                    "Panasonic Small Appliance",
+                                    { text: "LG", href: "https://www.abenson.com/brands/lg" },
+                                    { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
+                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
+                                    { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                                    { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                                    { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
+                                    { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
+                                    { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
+                                    { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
+                                    { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
                                 ],
                             },
                             {
                                 contentType: "links",
                                 title: "Where to avail",
                                 content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com" },
-                                    { text: "Abenson Viber Community", href: "#" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:0288118811" },
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
                                 ],
                             },
                             {
@@ -337,40 +349,36 @@
                                 ],
                             },
                         ],
-                    },
+                    },//end of 4th voucher
                     //
                     // 5th voucher
                     {
-                        id: "test",
-                        logoSrc: "img/kolin_logo.png",
-                        value: "P300",
-                        dateRange: "Oct 1 - Oct 10, 2025",
-                        code: "BENZPOGI",
+                        id: "BDAY250",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_250.jpg",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY250",
                         terms1: "See applicable items",
-                        terms2: "min. spend of P50,000",
-                        backgroundColor: "red",
+                        terms2: "",
                         // Modals:
-                        modalTitle: "Voucher Test",
-                        modalDate: "June 27 - 30, 2025",
+                        modalTitle: "BDAY250",
+                        modalDate: "July 1 - 15, 2025",
                         modalSections: [
                             {
-                                contentType: "list",
+                                contentType: "links",
                                 title:
-                                    "Get up to P300 OFF with a minimum purchase of P50,000 on all applicable brands",
+                                    "Get up to P250 OFF with a minimum purchase of P50,000 on all applicable brands",
                                 content: [
-                                    "Midea Small Appliance",
-                                    "Dowell Small Appliance",
-                                    "Samsung Small Appliance",
-                                    "Panasonic Small Appliance",
+                                    { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
+                                    { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
                                 ],
                             },
                             {
                                 contentType: "links",
                                 title: "Where to avail",
                                 content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com" },
-                                    { text: "Abenson Viber Community", href: "#" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:0288118811" },
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
                                 ],
                             },
                             {
@@ -383,8 +391,96 @@
                                 ],
                             },
                         ],
-                    },
+                    },//end of 5th voucher
+                    //
+                    // 6th voucher
+                    {
+                        id: "BDAY200",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_200.jpg",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY200",
+                        terms1: "See applicable items",
+                        terms2: "",
+                        // Modals:
+                        modalTitle: "BDAY200",
+                        modalDate: "July 1 - 15, 2025",
+                        modalSections: [
+                            {
+                                contentType: "links",
+                                title:
+                                    "Get up to P200 OFF with a minimum purchase of P50,000 on all applicable brands",
+                                content: [
+                                    { text: "Midea Small Appliances", href: "https://www.abenson.com/brands/midea" },
+                                    { text: "Dowell Small Appliances", href: "https://www.abenson.com/brands/dowell" },
+                                ],
+                            },
+                            {
+                                contentType: "links",
+                                title: "Where to avail",
+                                content: [
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
+                                ],
+                            },
+                            {
+                                contentType: "list",
+                                title: "Terms & Conditions",
+                                content: [
+                                    "Promo code is valid for one time use only.",
+                                    "Promo terms and conditions are subject to change without prior notice.",
+                                    "Applicable for cash/straight online transactions only.",
+                                ],
+                            },
+                        ],
+                    },//end of 6th voucher
+                    // 7th voucher
+                    {
+                        id: "BDAY100",
+                        voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_100.jpg",
+                        dateRange: "July 1 - 15, 2025",
+                        code: "BDAY100",
+                        terms1: "See applicable items",
+                        terms2: "",
+                        // Modals:
+                        modalTitle: "BDAY100",
+                        modalDate: "July 1 - 15, 2025",
+                        modalSections: [
+                            {
+                                contentType: "links",
+                                title:
+                                    "Get up to P100 OFF with a minimum purchase of P50,000 on all applicable brands",
+                                content: [
+                                    { text: "Midea Small Appliances", href: "https://www.abenson.com/brands/midea" },
+                                    { text: "Dowell Small Appliances", href: "https://www.abenson.com/brands/dowell" },
+                                    { text: "Samsung Small Appliances", href: "https://www.abenson.com/brands/samsung" },
+                                    { text: "Panasonic Small Appliances", href: "https://www.abenson.com/brands/panasonic" },
+                                ],
+                            },
+                            {
+                                contentType: "links",
+                                title: "Where to avail",
+                                content: [
+                                    { text: "abenson.com", href: "https://www.abenson.com/" },
+                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
+                                ],
+                            },
+                            {
+                                contentType: "list",
+                                title: "Terms & Conditions",
+                                content: [
+                                    "Promo code is valid for one time use only.",
+                                    "Promo terms and conditions are subject to change without prior notice.",
+                                    "Applicable for cash/straight online transactions only.",
+                                ],
+                            },
+                        ],
+                    },//end of 7th voucher
+
                 ];
+
+
 
                 function withDefaults(voucher) {
                     return {
@@ -403,13 +499,7 @@
                     return `
             <button class="voucher-item" data-target="#modal-${voucher.id}">
                 <div class="voucher-top" style="background-color: ${voucher.backgroundColor};">
-                    <img src="${voucher.logoSrc}" alt="" class="voucher-logo">
-                    <div class="voucher-value">
-                        <p>${voucher.value}</p>
-                        <p>VOUCHER</p>
-                        <div class="voucher-value-bg"></div>
-                    </div>
-                    <p class="voucher-tc">T&C</p>
+                    <img src="${voucher.voucherCardImg}" alt="" class="voucher-card-img" width="140" height="140">
                 </div>
                 <div class="voucher-btm">
                     <p class="voucher-date">${voucher.dateRange}</p>
@@ -422,85 +512,9 @@
                 }
 
 
-
-                //             function createModalHTML(voucher) {
-                //                 return `
-                //   <div id="modal-${voucher.id}" class="modal hidden">
-                //     <div class="modal-content">
-                //       <span class="close-btn">&times;</span>
-                //       <h2>${voucher.modalTitle}</h2>
-                //       <p>${voucher.modalContent}</p>
-                //       <p>${voucher.modaltestst}</p>
-                //     </div>
-                //   </div>
-                // `;
-                //             }
-
-
-                // 
-
-                //                 function createModalHTML(voucher) {
-                //                     const hasManyBrands = Array.isArray(voucher.modalBrands) && voucher.modalBrands.length > 4;
-                //                     const brandListClass = hasManyBrands ? 'brand-list two-columns' : 'brand-list';
-
-                //                     const brandsHTML = Array.isArray(voucher.modalBrands) && voucher.modalBrands.length
-                //                         ? `<ul class="${brandListClass}">${voucher.modalBrands.map(brand => `<li><a href="#">${brand}</a></li>`).join('')}</ul>`
-                //                         : '<p><em>No brands listed.</em></p>';
-
-                //                     return `
-                //     <div id="modal-${voucher.id}" class="modal hidden">
-                //       <div class="modal-content">
-                //         <span class="close-btn">&times;</span>
-                //         <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
-                //         <p class="modal-date">${voucher.modalDate || 'No Date'}</p>
-                //         <div class="modal-infos">
-                //           <p class="modal-description">${voucher.modalDescription || 'No description provided.'}</p>
-                //           ${brandsHTML}
-                //         </div>
-                //       </div>
-                //     </div>
-                //   `;
-                //                 }
-
-                //                 function createModalHTML(voucher) {
-                //                     const sectionsHTML = (voucher.modalSections || []).map(section => {
-                //                         const titleHTML = section.title ? `<strong class="section-description">${section.title}</strong>` : '';
-
-                //                         let contentHTML = '';
-                //                         if (section.contentType === "list") {
-                //                             contentHTML = `<ul class="section-list">${section.content.map(item => `<li>${item}</li>`).join('')}</ul>`;
-                //                         } else if (section.contentType === "links") {
-                //                             contentHTML = `<ul class="section-links">${section.content.map(link => `<li><a href="${link.href}" target="_blank">${link.text}</a></li>`).join('')}</ul>`;
-                //                         } else if (section.contentType === "text") {
-                //                             contentHTML = `<p>${section.content}</p>`;
-                //                         }
-
-                //                         return `
-                //       <div class="modal-infos">
-                //         ${titleHTML}
-                //         ${contentHTML}
-                //       </div>
-                //     `;
-                //                     }).join('');
-
-                //                     return `
-                //     <div id="modal-${voucher.id}" class="modal hidden">
-                //       <div class="modal-content">
-                //         <span class="close-btn">&times;</span>
-                //         <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
-                //         ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
-                //         ${sectionsHTML}
-                //       </div>
-                //     </div>
-                //   `;
-                //                 }
-
-
                 function createModalHTML(voucher) {
                     const sectionsHTML = (voucher.modalSections || []).map(section => {
-                        const titleHTML = section.title
-                            ? `<strong class="section-description">${section.title}</strong>`
-                            : '';
+                        const titleHTML = section.title ? `<strong class="section-description">${section.title}</strong>` : '';
 
                         let contentHTML = '';
 
@@ -522,24 +536,29 @@
                         }
 
                         return `
-                  <div class="modal-infos">
-                    ${titleHTML}
-                    ${contentHTML}
-                  </div>`;
+      <div class="modal-infos">
+        ${titleHTML}
+        ${contentHTML}
+      </div>
+    `;
                     }).join('');
 
                     return `
-                <div id="modal-${voucher.id}" class="modal hidden">
-                  <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
-                    ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
-                    ${sectionsHTML}
-                  </div>
-                </div>`;
+    <div id="modal-${voucher.id}" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
+        ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
+        ${sectionsHTML}
+
+       <!-- Copy Code Button -->
+        <div class="copy-code-modal">
+           <button class="copy-code-btn" data-code="${voucher.code}">Copy Code</button>
+        </div>
+      </div>
+    </div>
+  `;
                 }
-
-
 
                 function renderVouchers() {
                     const voucherContainer = document.getElementById("voucher-container");
@@ -553,7 +572,26 @@
 
                 renderVouchers();
 
+                //script for copy code listener
+                document.addEventListener("click", function (e) {
+                    if (e.target.matches(".copy-code-btn")) {
+                        const btn = e.target;
+                        const code = btn.getAttribute("data-code");
+
+                        navigator.clipboard.writeText(code)
+                            .then(() => {
+                                btn.textContent = "Copied!";
+                                setTimeout(() => btn.textContent = "Copy Code", 2000);
+                            })
+                            .catch(() => {
+                                btn.textContent = "Failed to copy";
+                                setTimeout(() => btn.textContent = "Copy Code", 2000);
+                            });
+                    }
+                });
             </script>
+
+
 
             <!-- Modal Script -->
             <script>
@@ -671,7 +709,7 @@
             <!-- Timer Script -->
             <script>
                 (function () {
-                    const countDownDate = new Date("July 31, 2025 23:59:59").getTime();
+                    const countDownDate = new Date("July 15, 2025 00:00:00").getTime();
 
                     function waitForTimerElements() {
                         const daysEl = document.getElementById("timer-days");
@@ -706,42 +744,13 @@
                 })();
             </script>
         </div>
-
-
-
     </section>
-
-
-
-
 </body>
 
 </html>
-
-
-<!-- // type="text/simi-script" -->
-
-<!-- Timer Script -->
-<!-- <script>
-    // Adjust time here (follow same format):
-    const countDownDate = new Date("July 31, 2025 23:59:59").getTime();
-
-    function updateTimer() {
-        const now = new Date().getTime();
-        const distance = countDownDate - now;
-
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        document.getElementById("timer-days").innerHTML = days.toString().padStart(2, '0');
-        document.getElementById("timer-hrs").innerHTML = hours.toString().padStart(2, '0');
-        document.getElementById("timer-mins").innerHTML = minutes.toString().padStart(2, '0');
-        document.getElementById("timer-secs").innerHTML = seconds.toString().padStart(2, '0');
+<style>
+    * {
+        box-sizing: border-box;
+        font-family: "Poppins";
     }
-
-    // Run immediately and then every second
-    updateTimer();
-    setInterval(updateTimer, 1000);
-</script> -->
+</style>

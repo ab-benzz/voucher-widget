@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ver2</title>
+    <title>Voucher Carousel 2.0</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="voucher.css">
 
@@ -149,12 +149,11 @@
                     // 1st voucher
                     {
                         id: "A",
-                        logoSrc: "img/kolin_logo.png",
+                        voucherCardImg: "img/bday_voucher_100.jpg",
                         value: "P300",
                         dateRange: "Oct 1 - Oct 10, 2025",
                         code: "BENZPOGI",
                         terms1: "See applicable items",
-                        terms2: "min. spend of P50,000",
                         backgroundColor: "blue",
                         // Modals:
                         modalTitle: "Voucher Test",
@@ -175,18 +174,9 @@
                                 contentType: "links",
                                 title: "Where to avail",
                                 content: [
-                                    { text: "LG", href: "https://www.abenson.com" },
-                                    { text: "Samsung TVs", href: "https://www.abenson.com" },
-                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com" },
-                                    { text: "Samsung Aircons", href: "https://www.abenson.com" },
-                                    { text: "Panasonic", href: "https://www.abenson.com" },
-                                    { text: "TCL", href: "https://www.abenson.com" },
-                                    { text: "Whirlpool", href: "https://www.abenson.com" },
-                                    { text: "Fujidenzo", href: "https://www.abenson.com" },
-                                    { text: "Condura Home Appliances", href: "https://www.abenson.com" },
-                                    { text: "Kolin", href: "https://www.abenson.com" },
-                                    { text: "Skyworth", href: "https://www.abenson.com" },
-                                    { text: "Carrier", href: "https://www.abenson.com" }
+                                    { text: "abenson.com", href: "https://www.abenson.com" },
+                                    { text: "Abenson Viber Community", href: "#" },
+                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:0288118811" },
                                 ],
                             },
                             {
@@ -403,13 +393,7 @@
                     return `
             <button class="voucher-item" data-target="#modal-${voucher.id}">
                 <div class="voucher-top" style="background-color: ${voucher.backgroundColor};">
-                    <img src="${voucher.logoSrc}" alt="" class="voucher-logo">
-                    <div class="voucher-value">
-                        <p>${voucher.value}</p>
-                        <p>VOUCHER</p>
-                        <div class="voucher-value-bg"></div>
-                    </div>
-                    <p class="voucher-tc">T&C</p>
+                    <img src="${voucher.voucherCardImg}" alt="" class="voucher-card-img">
                 </div>
                 <div class="voucher-btm">
                     <p class="voucher-date">${voucher.dateRange}</p>
@@ -462,81 +446,37 @@
                 //   `;
                 //                 }
 
-                //                 function createModalHTML(voucher) {
-                //                     const sectionsHTML = (voucher.modalSections || []).map(section => {
-                //                         const titleHTML = section.title ? `<strong class="section-description">${section.title}</strong>` : '';
-
-                //                         let contentHTML = '';
-                //                         if (section.contentType === "list") {
-                //                             contentHTML = `<ul class="section-list">${section.content.map(item => `<li>${item}</li>`).join('')}</ul>`;
-                //                         } else if (section.contentType === "links") {
-                //                             contentHTML = `<ul class="section-links">${section.content.map(link => `<li><a href="${link.href}" target="_blank">${link.text}</a></li>`).join('')}</ul>`;
-                //                         } else if (section.contentType === "text") {
-                //                             contentHTML = `<p>${section.content}</p>`;
-                //                         }
-
-                //                         return `
-                //       <div class="modal-infos">
-                //         ${titleHTML}
-                //         ${contentHTML}
-                //       </div>
-                //     `;
-                //                     }).join('');
-
-                //                     return `
-                //     <div id="modal-${voucher.id}" class="modal hidden">
-                //       <div class="modal-content">
-                //         <span class="close-btn">&times;</span>
-                //         <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
-                //         ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
-                //         ${sectionsHTML}
-                //       </div>
-                //     </div>
-                //   `;
-                //                 }
-
-
                 function createModalHTML(voucher) {
                     const sectionsHTML = (voucher.modalSections || []).map(section => {
-                        const titleHTML = section.title
-                            ? `<strong class="section-description">${section.title}</strong>`
-                            : '';
+                        const titleHTML = section.title ? `<strong class="section-description">${section.title}</strong>` : '';
 
                         let contentHTML = '';
-
-                        // Render based on section type
                         if (section.contentType === "list") {
-                            contentHTML = `
-                    <ul class="section-list">
-                      ${section.content.map(item => `<li>${item}</li>`).join('')}
-                    </ul>`;
+                            contentHTML = `<ul class="section-list">${section.content.map(item => `<li>${item}</li>`).join('')}</ul>`;
                         } else if (section.contentType === "links") {
-                            const isTwoColumn = section.content.length > 4;
-                            const linkClass = isTwoColumn ? "section-links two-columns" : "section-links";
-                            contentHTML = `
-                    <ul class="${linkClass}">
-                      ${section.content.map(link => `<li><a href="${link.href}" target="_blank">${link.text}</a></li>`).join('')}
-                    </ul>`;
+                            contentHTML = `<ul class="section-links">${section.content.map(link => `<li><a href="${link.href}" target="_blank">${link.text}</a></li>`).join('')}</ul>`;
                         } else if (section.contentType === "text") {
                             contentHTML = `<p>${section.content}</p>`;
                         }
 
                         return `
-                  <div class="modal-infos">
-                    ${titleHTML}
-                    ${contentHTML}
-                  </div>`;
+      <div class="modal-infos">
+        ${titleHTML}
+        ${contentHTML}
+      </div>
+    `;
                     }).join('');
 
                     return `
-                <div id="modal-${voucher.id}" class="modal hidden">
-                  <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
-                    ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
-                    ${sectionsHTML}
-                  </div>
-                </div>`;
+    <div id="modal-${voucher.id}" class="modal hidden">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
+        ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
+        ${sectionsHTML}
+      </div>
+    </div>
+  `;
                 }
 
 

@@ -36,9 +36,31 @@
   opacity: 1;
 }
 
+.voucher-item {
+  /*width: 140.5px;*/
+  /* min-width: 135px;*/
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  border-radius: 16px;
+  border: none;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+  /* scroll-snap-align: start; */
+}
+
+.voucher-item:hover {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.4);
+}
+
 .test-cont {
   position: relative;
 }
+
 .voucher-button {
   position: absolute;
   z-index: 5;
@@ -46,12 +68,13 @@
   transform: translateY(-50%);
   border: none;
   cursor: pointer;
-  background-color: rgba(230, 230, 230, 0.623);
+  background-color: white;
   border-radius: 100%;
   height: fit-content;
   width: fit-content;
-  display: none;
+  display: block;
 }
+
 .voucher-button:hover {
   background-color: rgba(255, 255, 255, 0.708);
 }
@@ -60,22 +83,31 @@
   transform: translateY(-50%) scale(0.95);
 }
 
+@media screen and (width <869px) {
+  .voucher-button {
+    display: none !important;
+  }
+}
+
 #scroll-next {
-  right: -18px;
+  right: -2%;
 }
 #scroll-prev {
-  left: -12px;
+  left: -2%;
 }
 
 .voucher-button.disabled {
   background-color: transparent;
   cursor: not-allowed;
-  /* opacity: 0; */
   display: none;
-  transition: opacity 0.5 ease-in-out;
 }
 
 .voucher-top {
+  height: fit-content;
+  border-radius: 12px;
+}
+
+/* .voucher-top {
   flex-direction: column;
   align-items: center;
   border-radius: 12px;
@@ -87,11 +119,13 @@
   justify-items: center;
   align-items: start;
   grid-template-rows: 30% 70%;
-}
+} */
 
 .voucher-card-img {
   width: 100%;
+  height: fit-content;
   object-fit: contain;
+  border-radius: 16px;
 }
 
 .voucher-value {
@@ -179,6 +213,9 @@
   line-height: 95%;
   text-wrap: nowrap;
   font-family: Poppins;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Modal */
@@ -205,10 +242,17 @@
 .modal-content {
   background: white;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 20px;
   position: relative;
   width: 90%;
   max-width: 400px;
+
+  max-height: 80%;
+  overflow: scroll;
+}
+
+.modal-content::-webkit-scrollbar {
+  display: none;
 }
 
 .close-btn {
@@ -344,11 +388,13 @@
 }
 
 /* Modals */
+/* Modals */
+/* Modals */
 
 .modal-title {
   color: var(--primary-color-blue-70, #185baa);
-  font-weight: 700;
-  font-size: clamp(16px, 2.4vw, 18px);
+  font-weight: 700 !important;
+  font-size: clamp(16px, 2.4vw, 18px) !important;
   margin: 0 auto;
   width: fit-content;
 }
@@ -358,12 +404,7 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 114%;
-  margin: 16px 0 8px;
-}
-
-.modal-infos li {
-  margin-left: 16px;
-  font-size: 14px;
+  margin: 16px 0 8px !important;
 }
 
 .section-description {
@@ -407,11 +448,41 @@
   margin: 8px 0;
 }
 
+.section-list li {
+  margin-left: 16px;
+  font-size: 14px;
+  color: var(--primary-text-color-primary-text-90, #4c525c);
+}
+
 .section-links {
-  margin: 8px 0;
+  margin: 8px 0 0 16px;
+  color: var(--primary-text-color-primary-text-90, #4c525c);
+}
+
+.section-links a {
+  color: #00a6e4 !important;
+  font-size: 14px !important;
 }
 
 .section-links.two-columns {
   column-count: 2;
   column-gap: 2rem;
+}
+
+.copy-code-modal {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.copy-code-modal > button {
+  background: var(--primary-color-blue-70, #185baa);
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  width: 130px;
+  height: 40px;
+  margin-top: 12px;
+}
+.copy-code-modal > button:hover {
+  background: var(--primary-color-blue-70, #2f73c2);
 }
