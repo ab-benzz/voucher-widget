@@ -498,9 +498,7 @@
                 function createVoucherHTML(voucher) {
                     return `
             <button class="voucher-item" data-target="#modal-${voucher.id}">
-                <div class="voucher-top" style="background-color: ${voucher.backgroundColor};">
                     <img src="${voucher.voucherCardImg}" alt="" class="voucher-card-img" width="140" height="140">
-                </div>
                 <div class="voucher-btm">
                     <p class="voucher-date">${voucher.dateRange}</p>
                     <strong class="voucher-code">${voucher.code}</strong>
