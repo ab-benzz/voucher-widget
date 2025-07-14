@@ -1,0 +1,77 @@
+const GITHUB_TOKEN = '';
+const GITHUB_USER = 'ab-benzz';
+const GITHUB_REPO = 'gsheet-test';
+const FILE_PATH = 'data/Sheet1.json'; // Change path if needed
+
+function uploadSheet1ToGitHub() {
+const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Sheet1');
+if (!sheet) {
+SpreadsheetApp.getUi().alert('Sheet1 not found.');
+return;
+}
+
+const data = sheet.getDataRange().getValues();
+const headers = ['id', 'item', 'quantity']; // Manually define since there are no column headers
+
+const jsonData = data.map(row => {
+const obj = {};
+headers.forEach((key, i) => {
+try {
+obj[key] = JSON.parse(row[i]);
+} catch (e) {
+obj[key] = row[i];
+}
+});
+return obj;
+});
+
+const content = JSON.stringify(jsonData, null, 2);
+const encodedContent = Utilities.base64Encode(content);
+const url = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
+
+// Try to get SHA of the file (for update support)
+let sha;
+try {
+const getResp = UrlFetchApp.fetch(url, {
+method: 'get',
+headers: {
+Authorization: `token ${GITHUB_TOKEN}`,
+Accept: 'application/vnd.github+json'
+},
+muteHttpExceptions: true
+});
+if (getResp.getResponseCode() === 200) {
+const existingFile = JSON.parse(getResp.getContentText());
+sha = existingFile.sha;
+}
+} catch (e) {
+Logger.log('File not found, will create new.');
+}
+
+const payload = {
+message: `Upload Sheet1 JSON: ${new Date().toISOString()}`,
+content: encodedContent,
+...(sha && { sha })
+};
+
+const options = {
+method: 'put',
+contentType: 'application/json',
+payload: JSON.stringify(payload),
+headers: {
+Authorization: `token ${GITHUB_TOKEN}`,
+Accept: 'application/vnd.github+json'
+}
+};
+
+try {
+const response = UrlFetchApp.fetch(url, options);
+const result = JSON.parse(response.getContentText());
+
+SpreadsheetApp.getUi().alert(`Upload successful!\n\nView it here:\n${result.content.html_url}`);
+Logger.log(result.content.html_url);
+} catch (error) {
+Logger.log(error);
+SpreadsheetApp.getUi().alert('Upload failed. See Logs for details.');
+}
+}

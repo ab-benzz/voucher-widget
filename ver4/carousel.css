@@ -1,12 +1,12 @@
 #payday-sale-banner {
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   /* width: 1300px;*/
   overflow: hidden;
-  border-radius: clamp(8.706px, 2vw, 20px);
-  /* gap: clamp(4px, 2vw, 10px); */
+  border-radius: clamp(8px, 2vw, 20px);
+  gap: clamp(4px, 2vw, 10px);
   padding: clamp(10px, 2vw, 15px) 0;
   position: relative;
 
@@ -66,6 +66,7 @@
 
 .ab-img > h2 > span {
   color: #fe55da;
+  white-space: nowrap;
 }
 
 .ab-img,
@@ -141,15 +142,29 @@
 
 .voucher-timer-div {
   display: flex;
-  gap: 8px;
+  gap: 16px;
   padding: 0 clamp(8px, 2vw, 16px);
 
-  flex-direction: column;
+  flex-direction: row;
   flex: 0 0 auto;
+
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: linear-gradient(
+    117deg,
+    rgba(226, 239, 255, 0.36) 0.74%,
+    rgba(226, 239, 255, 0.12) 111.76%
+  );
+  padding: clamp(6px, 2vw, 16px) 0;
+  box-shadow: 0px 0px 16px 0px rgba(24, 91, 170, 0.24);
+  backdrop-filter: blur(8px);
+  margin: 0 8px;
+
+  justify-content: center;
 }
 
 .voucher-timer-div > div {
-  flex: 1;
+  /* flex: 1; */
   /* align-items: stretch; */
   /* max-height: 91px; */
 }
