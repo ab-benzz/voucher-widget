@@ -1,20 +1,29 @@
-#payday-sale-banner {
+:root {
+  --voucher-gradient-bg: linear-gradient(
+    117deg,
+    rgba(226, 239, 255, 0.36) 0.74%,
+    rgba(226, 239, 255, 0.12) 111.76%
+  );
+  --voucher-blur-bg: blur(8px);
+  --voucher-border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+#carousel-voucher-banner {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* align-items: center; */
-  /* width: 1300px;*/
   overflow: hidden;
-  border-radius: clamp(8px, 2vw, 20px);
+  /* border-radius: clamp(8px, 2vw, 20px); */
   gap: clamp(4px, 2vw, 10px);
   padding: clamp(10px, 2vw, 15px) 0;
   position: relative;
 
-  max-width: 1300px;
+  /* max-width: 1300px; */
   margin: 0 auto;
+  width: 100vw;
 }
 
-#payday-sale-banner p {
+#carousel-voucher-banner p {
   margin: 0;
 }
 
@@ -26,7 +35,7 @@
   left: 0;
   background-image: url("https://ab-benzz.github.io/voucher-widget/payday-banner-bg.png");
   background-repeat: repeat;
-  background-size: cover;
+  background-size: auto;
   z-index: -1;
   /* background: linear-gradient(
     92deg,
@@ -44,13 +53,14 @@
   padding: 0 clamp(8px, 2vw, 16px);
 } */
 
-.payment-timer-container {
-  gap: clamp(10px, 2vw, 16px);
+.timer-container {
+  /* gap: clamp(10px, 2vw, 16px); */
   /*max-height: 91px;*/
+  gap: clamp(6px, 3vw, 16px);
 }
 
 .ab-img {
-  padding: clamp(3px, 2vw, 5px) 0;
+  /* padding: clamp(3px, 2vw, 5px) 0; */
   width: fit-content;
   flex: 0;
 }
@@ -60,7 +70,7 @@
   font-weight: 600;
   line-height: 114%;
   margin: 0;
-  font-size: clamp(16px, 3vw, 28px);
+  font-size: clamp(16px, 3.5vw, 28px);
   /* text-align: center; */
 }
 
@@ -70,46 +80,35 @@
 }
 
 .ab-img,
-.payment-timer-container {
+.timer-container {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  /*height: clamp(60px, 12vw, 95px);*/
   border-radius: 16px;
-  /* border: 1px solid rgba(255, 255, 255, 0.4); */
-  /* background: linear-gradient(
-    117deg,
-    rgba(226, 239, 255, 0.36) 0.74%,
-    rgba(226, 239, 255, 0.12) 111.76%
-  ); */
-  /* padding: clamp(6px, 2vw, 16px) 0; */
-  /* box-shadow: 0px 0px 16px 0px rgba(24, 91, 170, 0.24); */
-  /* backdrop-filter: blur(8px); */
 }
 
 .ab-img > img {
-  min-width: 87px;
-  max-width: 255px;
   height: 100%;
-  padding: 0 clamp(16px, 3vw, 24px);
+  /* padding: 0 0 0 clamp(16px, 3vw, 24px); */
   object-fit: contain;
+  width: clamp(110px, 32vw, 200px);
 }
-.payment-timer-container div {
+.timer-container div {
   display: flex;
   flex-direction: column;
   text-align: center;
   gap: 2px;
 }
 
-.payment-timer-container > div p {
-  font-size: clamp(12px, 2vw, 18px);
+.timer-container > div p {
+  font-size: clamp(12px, 3.5vw, 18px);
   margin-bottom: -4px;
   color: #185baa;
 }
 
 /* Timer text: days/hours/minutes/seconds */
-.payment-timer-container > div > p:last-of-type {
+.timer-container > div > p:last-of-type {
   font-size: clamp(10px, 2vw, 14px);
   margin: 2px 0 -4px;
   color: white;
@@ -120,8 +119,10 @@
 .timer-divider {
   height: clamp(25px, 5vw, 35px);
   /* width: 1px; */
-  border: 0.3px solid white;
+  border: 0.3px solid rgba(255, 255, 255, 0.54);
   transform: scaleX(1);
+
+  /* display: none !important; */
 }
 
 #timer-days,
@@ -132,82 +133,106 @@
   background: #daf8ff;
 }
 
-.payment-timer-container > div > p:first-of-type {
+.timer-container > div > p:first-of-type {
   padding: 4px 0;
   /* width: clamp(30px, 8vw, 50px); */
   width: clamp(28px, 7vw, 40px);
   margin: 0 auto;
   font-weight: 600;
+  aspect-ratio: 1/1;
+  place-content: center;
 }
 
 .voucher-timer-div {
   display: flex;
-  gap: 16px;
+  gap: clamp(8px, 3vw, 16px);
   padding: 0 clamp(8px, 2vw, 16px);
 
   flex-direction: row;
   flex: 0 0 auto;
 
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: linear-gradient(
-    117deg,
-    rgba(226, 239, 255, 0.36) 0.74%,
-    rgba(226, 239, 255, 0.12) 111.76%
-  );
+  border: var(--voucher-border);
+  background: var(--voucher-gradient-bg);
   padding: clamp(6px, 2vw, 16px) 0;
   box-shadow: 0px 0px 16px 0px rgba(24, 91, 170, 0.24);
-  backdrop-filter: blur(8px);
+  backdrop-filter: var(--voucher-blur-bg);
   margin: 0 8px;
 
   justify-content: center;
 }
 
-.voucher-timer-div > div {
-  /* flex: 1; */
-  /* align-items: stretch; */
-  /* max-height: 91px; */
-}
-
-@media screen and (width > 869px) {
+@media screen and (width > 768px) {
+  #carousel-voucher-banner {
+    flex-direction: row;
+    padding: clamp(10px, 2vw, 15px) 0 clamp(10px, 2vw, 15px) 16px;
+  }
   .voucher-timer-div {
-    /* flex-direction: row; */
+    flex-direction: column;
+    gap: 6px;
+    height: 100%;
+    padding: 16px;
+    place-content: center;
+  }
+
+  .test-cont {
+    place-content: center;
   }
 
   .voucher-timer-div {
-    padding: 0 32px 0 16px;
+    background: unset;
+    backdrop-filter: unset;
+    border: unset;
+    padding: unset;
   }
 
+  .ab-img {
+    width: 100%;
+  }
   /* #payday-sale-banner {
     display: grid;
     grid-template-columns: 35% 65%;
     padding: clamp(10px, 2vw, 15px) clamp(20px, 2vw, 60px);
     gap: 10px;
   } */
-
-  #payday-sale-banner > .test-cont,
-  #payday-sale-banner > .voucher-timer-div {
-    /* width: unset; */
-    /* padding: unset; */
-    /* flex: 1; */
-  }
-
-  /* .test-cont {
-    width: 100% !important;
-  } */
 }
 
-@media screen and (width > 1200px) {
-  #payday-sale-banner {
-    padding: clamp(10px, 2vw, 15px) clamp(20px, 5vw, 60px);
+@media screen and (width > 1400px) {
+  #carousel-voucher-banner {
+    /* padding: clamp(10px, 2vw, 15px) clamp(20px, 5vw, 60px); */
+    padding: clamp(10px, 2vw, 15px) 0;
+    height: 140px;
   }
 
   .voucher-timer-div {
     align-items: center;
-    /* flex-direction: row; */
+    flex-direction: row;
+    background: unset;
+    border: unset;
+    backdrop-filter: unset;
+    padding: unset;
+    gap: 16px;
+  }
+
+  .timer-container {
+    background: var(--voucher-gradient-bg);
+    height: 100%;
+    backdrop-filter: var(--voucher-blur-bg);
+    padding: 0 20px;
+    border: var(--voucher-border);
+    border-radius: 12px;
   }
 
   .ab-img > h2 {
     text-align: center;
+  }
+
+  #voucher-container,
+  .voucher-item {
+    height: 100% !important;
+  }
+
+  .test-cont {
+    overflow: visible !important;
   }
 }

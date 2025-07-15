@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ver3 voucher carousel</title>
+    <title>ver4 voucher carousel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -20,16 +20,16 @@
 
 
 
-    <section id="payday-sale-banner">
+    <section id="carousel-voucher-banner">
         <div class="voucher-timer-div">
             <div class="ab-img">
-                <!-- <img src="https://ab-benzz.github.io/voucher-widget/abenson_voucher_img.png" alt=""> -->
-                <h2>
+                <img src="https://ab-benzz.github.io/voucher-widget/abenson_voucher_img.png" alt="">
+                <!-- <h2>
                     Abenson <span>Birthday Vouchers</span>
-                </h2>
+                </h2> -->
             </div>
 
-            <div class="payment-timer-container">
+            <div class="timer-container">
                 <div>
                     <p id="timer-days">00</p>
                     <p>days</pp>
@@ -53,7 +53,7 @@
         </div>
 
         <div class="test-cont">
-            <!-- <button class="voucher-button" id="scroll-next">
+            <button class="voucher-button" id="scroll-next">
                 <svg fill="#767676" height="33px" width="33.2px" version="1.1" id="Layer_1"
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                     xml:space="preserve">
@@ -67,11 +67,11 @@
                         </g>
                     </g>
                 </svg>
-            </button> -->
+            </button>
 
-            <div id="voucher-container">
-            </div>
-            <!-- <button class="voucher-button" id="scroll-prev">
+            <div id="voucher-container"></div>
+
+            <button class="voucher-button" id="scroll-prev">
                 <svg fill="#767676" height="33px" width="33.2px" version="1.1" id="Layer_1"
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512"
                     xml:space="preserve">
@@ -85,11 +85,8 @@
                         </g>
                     </g>
                 </svg>
-            </button> -->
+            </button>
             <!-- <div class="voucher-fade-right"></div> -->
-
-
-
         </div>
 
         <div class="payday-banner-bg"></div>
@@ -97,403 +94,46 @@
         <div>
             <div class="modal-container"></div>
 
-
-            <!-- next and prev carousel buttons
             <script>
-                const container = document.getElementById("voucher-container");
-                const btnPrev = document.getElementById("scroll-prev");
-                const btnNext = document.getElementById("scroll-next");
-                const fadeRight = document.querySelector(".voucher-fade-right");
-                const scrollAmount = container.clientWidth * 0.9;
+                let vouchers = [];
 
-                btnPrev.classList.add("disabled");
+                const url = `https://ab-benzz.github.io/ui-ux-json/data/Sheet1.json?t=${Date.now()}`;
 
-                function updateUI() {
-                    const maxScrollLeft = container.scrollWidth - container.clientWidth;
-                    const scrollLeft = container.scrollLeft;
-                    const hasOverflow = container.scrollWidth > container.clientWidth;
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => {
+                        vouchers = data;
+                        renderVouchers(); // Call this only after data is loaded
+                        updateUI();
+                        const timerDateString = vouchers[0]?.timerEndDate || "September 4, 2025 00:00:00";
+                        startTimer(timerDateString);
+                    })
+                    .catch(error => {
+                        console.error('Error loading vouchers:', error);
+                    });
 
-                    const atStart = scrollLeft <= 0;
-                    const atEnd = scrollLeft >= maxScrollLeft - 5;
+                function renderVouchers() {
+                    const voucherContainer = document.getElementById("voucher-container");
+                    const modalContainer = document.querySelector(".modal-container");
 
-                    // Only show scroll-next initially if overflow exists
-                    btnPrev.classList.toggle("disabled", true); // always hide prev on first load
-                    btnNext.classList.toggle("disabled", !hasOverflow); // show next if needed
+                    voucherContainer.innerHTML = '';
+                    modalContainer.innerHTML = '';
 
-                    // Adjust buttons on scroll
-                    if (!atStart) {
-                        btnPrev.classList.remove("disabled");
-                    }
-                    if (atEnd) {
-                        btnNext.classList.add("disabled");
-                    }
+                    vouchers.forEach(voucher => {
+                        voucherContainer.innerHTML += createVoucherHTML(voucher);
+                        modalContainer.innerHTML += createModalHTML(voucher);
+                    });
 
-                    // Fade effect
-                    if (fadeRight) {
-                        fadeRight.classList.toggle("visible", hasOverflow && !atEnd);
-                    }
+                    setupModalEvents();
                 }
-
-                // Event listeners
-                container.addEventListener("scroll", updateUI);
-                window.addEventListener("resize", updateUI);
-
-                btnNext.addEventListener("click", () => {
-                    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-                });
-
-                btnPrev.addEventListener("click", () => {
-                    container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-                });
-
-                // Run after DOM and images are fully loaded
-                window.addEventListener("load", () => {
-                    requestAnimationFrame(updateUI);
-                });
-            </script> -->
-
-
-            <!-- Edit Arrays Here -->
-            <script>
-                const vouchers = [
-                    //
-                    // 1st voucher
-                    {
-                        id: "BDAY1000",
-                        voucherCardImg: "ver4_voucher.png",
-                        value: "P300",
-                        dateRange: "July 1 - 15, 2025",
-                        code: "BDAY1000",
-                        terms1: "See applicable items",
-                        terms2: " ",
-                        // Modals:
-                        modalTitle: "BDAY1000",
-                        modalDate: "July 1 - 15, 2025",
-                        modalSections: [
-                            {
-                                contentType: "links",
-                                title:
-                                    "Get up to P1000 OFF with a minimum purchase of P50,000 on all applicable brands",
-                                content: [
-                                    { text: "LG", href: "https://www.abenson.com/brands/lg" },
-                                    { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
-                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
-                                    { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
-                                    { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
-                                    { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
-                                    { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
-                                    { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
-                                    { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
-                                    { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
-                                    { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
-                                    { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
-                                ],
-                            },
-                            {
-                                contentType: "links",
-                                title: "Where to avail",
-                                content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com/" },
-                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                                ],
-                            },
-                            {
-                                contentType: "list",
-                                title: "Terms & Conditions",
-                                content: [
-                                    "Promo code is valid for one time use only.",
-                                    "Promo terms and conditions are subject to change without prior notice.",
-                                    "Applicable for cash/straight online transactions only.",
-                                ],
-                            },
-                        ],
-                    },//end of 1st voucher
-                    //
-                    // 2nd voucher
-                    {
-                        id: "BDAY500",
-                        voucherCardImg: "ver4_voucher.png",
-                        value: "P500",
-                        dateRange: "July 1 - 15, 2025",
-                        code: "BDAY500",
-                        terms1: "See applicable items",
-                        terms2: " ",
-
-                        // Modals:
-                        modalTitle: "BDAY500",
-                        modalDate: "July 1 - 15, 2025",
-                        modalSections: [
-                            {
-                                contentType: "links",
-                                title:
-                                    "Get up to P500 OFF with a minimum purchase of P50,000 on all applicable brands",
-                                content: [
-                                    { text: "LG", href: "https://www.abenson.com/brands/lg" },
-                                    { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
-                                    { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
-                                    { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
-                                    { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
-                                    { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
-                                    { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
-                                    { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
-                                    { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
-                                    { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
-                                ],
-                            },
-                            {
-                                contentType: "links",
-                                title: "Where to avail",
-                                content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com/" },
-                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                                ],
-                            },
-                            {
-                                contentType: "list",
-                                title: "Terms & Conditions",
-                                content: [
-                                    "Promo code is valid for one time use only.",
-                                    "Promo terms and conditions are subject to change without prior notice.",
-                                    "Applicable for cash/straight online transactions only.",
-                                ],
-                            },
-                        ],
-                    },//end of 2nd voucher
-                    //
-                    // 3rd voucher
-                    {
-                        id: "BDAY450",
-                        voucherCardImg: "ver4_voucher.png",
-                        // voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_450.jpg",
-                        dateRange: "July 1 - 15, 2025",
-                        code: "BDAY450",
-                        terms1: "See applicable items",
-                        terms2: "",
-                        // Modals:
-                        modalTitle: "BDAY450",
-                        modalDate: "July 1 - 15, 2025",
-                        modalSections: [
-                            {
-                                contentType: "links",
-                                title:
-                                    "Get up to P450 OFF with a minimum purchase of P50,000 on all applicable brands",
-                                content: [
-                                    { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
-                                    { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
-                                ],
-                            },
-                            {
-                                contentType: "links",
-                                title: "Where to avail",
-                                content: [
-                                    { text: "abenson.com", href: "https://www.abenson.com/" },
-                                    { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                                    { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                                ],
-                            },
-                            {
-                                contentType: "list",
-                                title: "Terms & Conditions",
-                                content: [
-                                    "Promo code is valid for one time use only.",
-                                    "Promo terms and conditions are subject to change without prior notice.",
-                                    "Applicable for cash/straight online transactions only.",
-                                ],
-                            },
-                        ],
-                    },//end of 3rd voucher
-                    //
-                    // 4th voucher
-                    // {
-                    //     id: "BDAY300",
-                    //     voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_300.jpg",
-                    //     dateRange: "July 1 - 15, 2025",
-                    //     code: "BDAY300",
-                    //     terms1: "See applicable items",
-                    //     terms2: " ",
-                    //     // Modals:
-                    //     modalTitle: "BDAY300",
-                    //     modalDate: "July 1 - 15, 2025",
-                    //     modalSections: [
-                    //         {
-                    //             contentType: "links",
-                    //             title:
-                    //                 "Get up to P300 OFF with a minimum purchase of P50,000 on all applicable brands",
-                    //             content: [
-                    //                 { text: "LG", href: "https://www.abenson.com/brands/lg" },
-                    //                 { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
-                    //                 { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
-                    //                 { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
-                    //                 { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
-                    //                 { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
-                    //                 { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
-                    //                 { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
-                    //                 { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
-                    //                 { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "links",
-                    //             title: "Where to avail",
-                    //             content: [
-                    //                 { text: "abenson.com", href: "https://www.abenson.com/" },
-                    //                 { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                    //                 { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "list",
-                    //             title: "Terms & Conditions",
-                    //             content: [
-                    //                 "Promo code is valid for one time use only.",
-                    //                 "Promo terms and conditions are subject to change without prior notice.",
-                    //                 "Applicable for cash/straight online transactions only.",
-                    //             ],
-                    //         },
-                    //     ],
-                    // },//end of 4th voucher
-                    // //
-                    // // 5th voucher
-                    // {
-                    //     id: "BDAY250",
-                    //     voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_250.jpg",
-                    //     dateRange: "July 1 - 15, 2025",
-                    //     code: "BDAY250",
-                    //     terms1: "See applicable items",
-                    //     terms2: "",
-                    //     // Modals:
-                    //     modalTitle: "BDAY250",
-                    //     modalDate: "July 1 - 15, 2025",
-                    //     modalSections: [
-                    //         {
-                    //             contentType: "links",
-                    //             title:
-                    //                 "Get up to P250 OFF with a minimum purchase of P50,000 on all applicable brands",
-                    //             content: [
-                    //                 { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
-                    //                 { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "links",
-                    //             title: "Where to avail",
-                    //             content: [
-                    //                 { text: "abenson.com", href: "https://www.abenson.com/" },
-                    //                 { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                    //                 { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "list",
-                    //             title: "Terms & Conditions",
-                    //             content: [
-                    //                 "Promo code is valid for one time use only.",
-                    //                 "Promo terms and conditions are subject to change without prior notice.",
-                    //                 "Applicable for cash/straight online transactions only.",
-                    //             ],
-                    //         },
-                    //     ],
-                    // },//end of 5th voucher
-                    // //
-                    // // 6th voucher
-                    // {
-                    //     id: "BDAY200",
-                    //     voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_200.jpg",
-                    //     dateRange: "July 1 - 15, 2025",
-                    //     code: "BDAY200",
-                    //     terms1: "See applicable items",
-                    //     terms2: "",
-                    //     // Modals:
-                    //     modalTitle: "BDAY200",
-                    //     modalDate: "July 1 - 15, 2025",
-                    //     modalSections: [
-                    //         {
-                    //             contentType: "links",
-                    //             title:
-                    //                 "Get up to P200 OFF with a minimum purchase of P50,000 on all applicable brands",
-                    //             content: [
-                    //                 { text: "Midea Small Appliances", href: "https://www.abenson.com/brands/midea" },
-                    //                 { text: "Dowell Small Appliances", href: "https://www.abenson.com/brands/dowell" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "links",
-                    //             title: "Where to avail",
-                    //             content: [
-                    //                 { text: "abenson.com", href: "https://www.abenson.com/" },
-                    //                 { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                    //                 { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "list",
-                    //             title: "Terms & Conditions",
-                    //             content: [
-                    //                 "Promo code is valid for one time use only.",
-                    //                 "Promo terms and conditions are subject to change without prior notice.",
-                    //                 "Applicable for cash/straight online transactions only.",
-                    //             ],
-                    //         },
-                    //     ],
-                    // },//end of 6th voucher
-                    // // 7th voucher
-                    // {
-                    //     id: "BDAY100",
-                    //     voucherCardImg: "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_100.jpg",
-                    //     dateRange: "July 1 - 15, 2025",
-                    //     code: "BDAY100",
-                    //     terms1: "See applicable items",
-                    //     terms2: "",
-                    //     // Modals:
-                    //     modalTitle: "BDAY100",
-                    //     modalDate: "July 1 - 15, 2025",
-                    //     modalSections: [
-                    //         {
-                    //             contentType: "links",
-                    //             title:
-                    //                 "Get up to P100 OFF with a minimum purchase of P50,000 on all applicable brands",
-                    //             content: [
-                    //                 { text: "Midea Small Appliances", href: "https://www.abenson.com/brands/midea" },
-                    //                 { text: "Dowell Small Appliances", href: "https://www.abenson.com/brands/dowell" },
-                    //                 { text: "Samsung Small Appliances", href: "https://www.abenson.com/brands/samsung" },
-                    //                 { text: "Panasonic Small Appliances", href: "https://www.abenson.com/brands/panasonic" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "links",
-                    //             title: "Where to avail",
-                    //             content: [
-                    //                 { text: "abenson.com", href: "https://www.abenson.com/" },
-                    //                 { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
-                    //                 { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
-                    //             ],
-                    //         },
-                    //         {
-                    //             contentType: "list",
-                    //             title: "Terms & Conditions",
-                    //             content: [
-                    //                 "Promo code is valid for one time use only.",
-                    //                 "Promo terms and conditions are subject to change without prior notice.",
-                    //                 "Applicable for cash/straight online transactions only.",
-                    //             ],
-                    //         },
-                    //     ],
-                    // },//end of 7th voucher
-
-                ];
-
-
 
                 function withDefaults(voucher) {
                     return {
                         id: "",
                         logoSrc: "",
-                        value: "",
                         dateRange: "",
                         code: "",
-                        terms: "",
+                        voucher_card_info: "",
                         modalTitle: "",
                         modalContent: "",
                     };
@@ -506,8 +146,7 @@
                 <div class="voucher-btm">
                     <p class="voucher-date">${voucher.dateRange}</p>
                     <strong class="voucher-code">${voucher.code}</strong>
-                    <p>${voucher.terms1}</p>
-                    <p>${voucher.terms2}</p>
+                    <p>${voucher.voucher_card_info}</p>
                 </div>
             </button>
         `;
@@ -550,7 +189,7 @@
       <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2 class="modal-title">${voucher.modalTitle || 'No Title'}</h2>
-        ${voucher.modalDate?.trim() ? `<p class="modal-date">${voucher.modalDate}</p>` : ''}
+        ${voucher.dateRange?.trim() ? `<p class="modal-date">${voucher.dateRange}</p>` : ''}
         ${sectionsHTML}
 
        <!-- Copy Code Button -->
@@ -562,17 +201,6 @@
   `;
                 }
 
-                function renderVouchers() {
-                    const voucherContainer = document.getElementById("voucher-container");
-                    const modalContainer = document.querySelector(".modal-container");
-
-                    vouchers.forEach((voucher) => {
-                        voucherContainer.innerHTML += createVoucherHTML(voucher);
-                        modalContainer.innerHTML += createModalHTML(voucher);
-                    });
-                }
-
-                renderVouchers();
 
                 //script for copy code listener
                 document.addEventListener("click", function (e) {
@@ -591,12 +219,255 @@
                             });
                     }
                 });
+
+
+                // Modal Setup Draggable
+                // Modal Setup Draggable
+                // Modal Setup Draggable
+                function setupModalEvents() {
+                    const buttons = document.querySelectorAll('.voucher-item');
+
+                    buttons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const targetModal = document.querySelector(button.dataset.target);
+                            if (!targetModal) return;
+
+                            const content = targetModal.querySelector('.modal-content');
+
+                            // Reset styles only if hidden
+                            if (targetModal.classList.contains('hidden')) {
+                                content.classList.remove('closing', 'slide-down');
+                                content.style.transition = '';
+                                content.style.transform = '';
+                                content.style.opacity = '';
+                            }
+
+                            targetModal.classList.remove('hidden');
+                            content.classList.add('slide-in');
+
+                            content.addEventListener('animationend', () => {
+                                content.classList.remove('slide-in');
+                            }, { once: true });
+                        });
+                    });
+
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        const content = modal.querySelector('.modal-content');
+                        // let startY = 0;
+                        // let currentY = 0;
+                        // let isSwiping = false;
+                        let startY = 0;
+                        let currentY = 0;
+                        let lastMoveY = 0;
+                        let isSwiping = false;
+                        let swipeStartedFromTop = false;
+
+
+                        const closeModal = () => {
+                            const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+                            content.classList.add('closing');
+                            content.style.opacity = '0';
+
+                            if (isMobile) {
+                                content.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                                content.style.transform = 'translateY(100%)';
+                            }
+
+                            modal.classList.add('fading-out');
+
+                            const handleClose = () => {
+                                modal.classList.add('hidden');
+                                modal.classList.remove('fading-out');
+                                content.classList.remove('closing');
+                                content.style.transition = '';
+                                content.style.transform = '';
+                                content.style.opacity = '';
+                                content.removeEventListener('animationend', handleClose);
+                                content.removeEventListener('transitionend', handleClose);
+                            };
+
+                            content.addEventListener('animationend', handleClose, { once: true });
+                            content.addEventListener('transitionend', handleClose, { once: true });
+                        };
+
+
+
+
+                        content.addEventListener('touchstart', (e) => {
+                            startY = e.touches[0].clientY;
+                            lastMoveY = startY;
+                            isSwiping = true;
+                            swipeStartedFromTop = content.scrollTop === 0; // Only allow swipe-close if drag started at top
+                            content.style.transition = '';
+                        });
+
+                        content.addEventListener('touchmove', (e) => {
+                            if (!isSwiping || !swipeStartedFromTop) return;
+
+                            currentY = e.touches[0].clientY;
+                            const deltaY = currentY - startY;
+
+                            if (deltaY > 0) {
+                                e.preventDefault(); // Block scroll
+                                lastMoveY = currentY;
+
+                                const resistance = Math.min(deltaY, 300);
+                                content.style.transform = `translateY(${resistance}px)`;
+                                // content.style.transform = `translateY(${resistance}px) scale(${Math.max(1 - resistance / 1000, 0.95)})`;
+                                content.style.opacity = Math.max(1 - resistance / 300, 0.7);
+                                document.body.style.overflow = 'hidden';
+                            }
+                        }, { passive: false });
+
+                        content.addEventListener('touchend', () => {
+                            const deltaY = currentY - startY;
+                            const endDirection = currentY - lastMoveY;
+
+                            isSwiping = false;
+                            document.body.style.overflow = '';
+
+                            if (swipeStartedFromTop && deltaY > 100 && endDirection >= 0) {
+                                closeModal(); // Only close if started from top and still swiping down
+                            } else {
+                                content.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+                                content.style.transform = 'translateY(0) scale(1)';
+                                content.style.opacity = '1';
+                                content.addEventListener('transitionend', () => {
+                                    content.style.transition = '';
+                                }, { once: true });
+                            }
+                        });
+
+                        // content.addEventListener('touchstart', (e) => {
+                        //     startY = e.touches[0].clientY;
+                        //     isSwiping = true;
+                        //     content.style.transition = '';
+                        // });
+
+                        // content.addEventListener('touchmove', (e) => {
+                        //     if (!isSwiping) return;
+
+                        //     currentY = e.touches[0].clientY;
+                        //     const deltaY = currentY - startY;
+
+                        //     const atTop = content.scrollTop === 0;
+
+                        //     if (deltaY > 0 && atTop) {
+                        //         e.preventDefault();
+
+                        //         const resistance = Math.min(deltaY, 300);
+                        //         content.style.transform = `translateY(${resistance}px) scale(${Math.max(1 - resistance / 1000, 0.95)})`;
+                        //         content.style.opacity = Math.max(1 - resistance / 300, 0.7);
+                        //         document.body.style.overflow = 'hidden';
+                        //     }
+                        // }, { passive: false });
+
+                        // content.addEventListener('touchend', () => {
+                        //     const deltaY = currentY - startY;
+                        //     isSwiping = false;
+                        //     document.body.style.overflow = '';
+
+                        //     if (deltaY > 100) {
+                        //         closeModal();
+                        //     } else {
+                        //         content.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+                        //         content.style.transform = 'translateY(0) scale(1)';
+                        //         content.style.opacity = '1';
+                        //         content.addEventListener('transitionend', () => {
+                        //             content.style.transition = '';
+                        //         }, { once: true });
+                        //     }
+                        // });
+
+                        modal.querySelector('.close-btn')?.addEventListener('click', closeModal);
+
+                        modal.addEventListener('click', (e) => {
+                            if (e.target === modal) closeModal();
+                        });
+
+                        document.addEventListener('keydown', (e) => {
+                            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                                closeModal();
+                            }
+                        });
+                    });
+                }
+
+                // Timer Function Script
+                // Timer Function Script
+                // Timer Function Script
+                function startTimer(targetDateString) {
+                    const countDownDate = new Date(targetDateString).getTime();
+
+                    function waitForTimerElements() {
+                        const daysEl = document.getElementById("timer-days");
+                        const hrsEl = document.getElementById("timer-hrs");
+                        const minsEl = document.getElementById("timer-mins");
+                        const secsEl = document.getElementById("timer-secs");
+
+                        if (daysEl && hrsEl && minsEl && secsEl) {
+                            function updateTimer() {
+                                const now = new Date().getTime();
+                                const distance = countDownDate - now;
+
+                                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                                daysEl.innerHTML = days.toString().padStart(2, '0');
+                                hrsEl.innerHTML = hours.toString().padStart(2, '0');
+                                minsEl.innerHTML = minutes.toString().padStart(2, '0');
+                                secsEl.innerHTML = seconds.toString().padStart(2, '0');
+                            }
+
+                            updateTimer();
+                            setInterval(updateTimer, 1000);
+                        } else {
+                            requestAnimationFrame(waitForTimerElements); // keep checking
+                        }
+                    }
+
+                    waitForTimerElements(); // start checking
+                }
+
+
+                // Next and Prev button for voucher container
+                const container = document.getElementById("voucher-container");
+                const btnPrev = document.getElementById("scroll-prev");
+                const btnNext = document.getElementById("scroll-next");
+
+                function updateUI() {
+                    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+                    const scrollLeft = container.scrollLeft;
+                    const hasOverflow = container.scrollWidth > container.clientWidth;
+
+                    const atStart = scrollLeft <= 0;
+                    const atEnd = scrollLeft >= maxScrollLeft - 5;
+
+                    btnPrev.classList.toggle("disabled", atStart);
+                    btnNext.classList.toggle("disabled", atEnd || !hasOverflow);
+                }
+
+                btnNext.addEventListener("click", () => {
+                    const scrollAmount = container.clientWidth * 0.9;
+                    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                });
+
+                btnPrev.addEventListener("click", () => {
+                    const scrollAmount = container.clientWidth * 0.9;
+                    container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+                });
+
+                container.addEventListener("scroll", updateUI);
+                window.addEventListener("resize", updateUI);
             </script>
 
 
 
-            <!-- Modal Script -->
-            <script>
+            <!-- Modal Draggable Script -->
+            <!-- <script>
                 const buttons = document.querySelectorAll('.voucher-item');
 
                 buttons.forEach(button => {
@@ -663,21 +534,6 @@
                         content.style.transition = '';
                     });
 
-                    //   content.addEventListener('touchmove', (e) => {
-                    //     if (!isSwiping) return;
-                    //     e.preventDefault(); // prevent page scroll
-                    //     currentY = e.touches[0].clientY;
-                    //     const deltaY = currentY - startY;
-
-                    //     if (deltaY > 0) {
-                    //         const resistance = Math.min(deltaY, 300);
-                    //         content.style.transform = `translateY(${resistance}px) scale(${Math.max(1 - resistance / 1000, 0.95)})`;
-                    //         content.style.opacity = Math.max(1 - resistance / 300, 0.7);
-                    //         document.body.style.overflow = 'hidden';
-                    //     }
-                    // }, { passive: false });
-
-
                     content.addEventListener('touchmove', (e) => {
                         if (!isSwiping) return;
 
@@ -726,45 +582,47 @@
                         }
                     });
                 });
-            </script>
+            </script> -->
 
             <!-- Timer Script -->
-            <script>
-                (function () {
-                    const countDownDate = new Date("July 15, 2025 00:00:00").getTime();
+            <!-- <script>
+                // (function () {
+                //     const countDownDate = new Date("September 15, 2025 00:00:00").getTime();
 
-                    function waitForTimerElements() {
-                        const daysEl = document.getElementById("timer-days");
-                        const hrsEl = document.getElementById("timer-hrs");
-                        const minsEl = document.getElementById("timer-mins");
-                        const secsEl = document.getElementById("timer-secs");
+                //     function waitForTimerElements() {
+                //         const daysEl = document.getElementById("timer-days");
+                //         const hrsEl = document.getElementById("timer-hrs");
+                //         const minsEl = document.getElementById("timer-mins");
+                //         const secsEl = document.getElementById("timer-secs");
 
-                        if (daysEl && hrsEl && minsEl && secsEl) {
-                            function updateTimer() {
-                                const now = new Date().getTime();
-                                const distance = countDownDate - now;
+                //         if (daysEl && hrsEl && minsEl && secsEl) {
+                //             function updateTimer() {
+                //                 const now = new Date().getTime();
+                //                 const distance = countDownDate - now;
 
-                                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                //                 const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                //                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                //                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                //                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                                daysEl.innerHTML = days.toString().padStart(2, '0');
-                                hrsEl.innerHTML = hours.toString().padStart(2, '0');
-                                minsEl.innerHTML = minutes.toString().padStart(2, '0');
-                                secsEl.innerHTML = seconds.toString().padStart(2, '0');
-                            }
+                //                 daysEl.innerHTML = days.toString().padStart(2, '0');
+                //                 hrsEl.innerHTML = hours.toString().padStart(2, '0');
+                //                 minsEl.innerHTML = minutes.toString().padStart(2, '0');
+                //                 secsEl.innerHTML = seconds.toString().padStart(2, '0');
+                //             }
 
-                            updateTimer();
-                            setInterval(updateTimer, 1000);
-                        } else {
-                            requestAnimationFrame(waitForTimerElements); // keep checking
-                        }
-                    }
+                //             updateTimer();
+                //             setInterval(updateTimer, 1000);
+                //         } else {
+                //             requestAnimationFrame(waitForTimerElements); // keep checking
+                //         }
+                //     }
 
-                    waitForTimerElements(); // start
-                })();
+                //     waitForTimerElements(); // start
+                // })();
             </script>
+
+             -->
         </div>
     </section>
 </body>
@@ -778,3 +636,334 @@
         padding: 0;
     }
 </style>
+
+
+<!-- Modal reserve 6:19pm -->
+<!-- function setupModalEvents() {
+                    const buttons = document.querySelectorAll('.voucher-item');
+
+                    buttons.forEach(button => {
+                        button.addEventListener('click', () => {
+                            const targetModal = document.querySelector(button.dataset.target);
+                            if (!targetModal) return;
+
+                            const content = targetModal.querySelector('.modal-content');
+
+                            // Reset styles only if hidden
+                            if (targetModal.classList.contains('hidden')) {
+                                content.classList.remove('closing', 'slide-down');
+                                content.style.transition = '';
+                                content.style.transform = '';
+                                content.style.opacity = '';
+                            }
+
+                            targetModal.classList.remove('hidden');
+                            content.classList.add('slide-in');
+
+                            content.addEventListener('animationend', () => {
+                                content.classList.remove('slide-in');
+                            }, { once: true });
+                        });
+                    });
+
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        const content = modal.querySelector('.modal-content');
+                        let startY = 0;
+                        let currentY = 0;
+                        let isSwiping = false;
+
+                        const closeModal = () => {
+                            const isMobile = window.matchMedia('(max-width: 767px)').matches;
+
+                            content.classList.add('closing');
+                            content.style.opacity = '0';
+
+                            if (isMobile) {
+                                content.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+                                content.style.transform = 'translateY(100%)';
+                            }
+
+                            modal.classList.add('fading-out');
+
+                            const handleClose = () => {
+                                modal.classList.add('hidden');
+                                modal.classList.remove('fading-out');
+                                content.classList.remove('closing');
+                                content.style.transition = '';
+                                content.style.transform = '';
+                                content.style.opacity = '';
+                                content.removeEventListener('animationend', handleClose);
+                                content.removeEventListener('transitionend', handleClose);
+                            };
+
+                            content.addEventListener('animationend', handleClose, { once: true });
+                            content.addEventListener('transitionend', handleClose, { once: true });
+                        };
+
+                        content.addEventListener('touchstart', (e) => {
+                            startY = e.touches[0].clientY;
+                            isSwiping = true;
+                            content.style.transition = '';
+                        });
+
+                        content.addEventListener('touchmove', (e) => {
+                            if (!isSwiping) return;
+
+                            currentY = e.touches[0].clientY;
+                            const deltaY = currentY - startY;
+
+                            const atTop = content.scrollTop === 0;
+
+                            if (deltaY > 0 && atTop) {
+                                e.preventDefault();
+
+                                const resistance = Math.min(deltaY, 300);
+                                content.style.transform = `translateY(${resistance}px) scale(${Math.max(1 - resistance / 1000, 0.95)})`;
+                                content.style.opacity = Math.max(1 - resistance / 300, 0.7);
+                                document.body.style.overflow = 'hidden';
+                            }
+                        }, { passive: false });
+
+                        content.addEventListener('touchend', () => {
+                            const deltaY = currentY - startY;
+                            isSwiping = false;
+                            document.body.style.overflow = '';
+
+                            if (deltaY > 100) {
+                                closeModal();
+                            } else {
+                                content.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+                                content.style.transform = 'translateY(0) scale(1)';
+                                content.style.opacity = '1';
+                                content.addEventListener('transitionend', () => {
+                                    content.style.transition = '';
+                                }, { once: true });
+                            }
+                        });
+
+                        modal.querySelector('.close-btn')?.addEventListener('click', closeModal);
+
+                        modal.addEventListener('click', (e) => {
+                            if (e.target === modal) closeModal();
+                        });
+
+                        document.addEventListener('keydown', (e) => {
+                            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                                closeModal();
+                            }
+                        });
+                    });
+                }
+ -->
+
+
+<!-- <script>
+                const container = document.getElementById("voucher-container");
+                const btnPrev = document.getElementById("scroll-prev");
+                const btnNext = document.getElementById("scroll-next");
+                const fadeRight = document.querySelector(".voucher-fade-right");
+                const scrollAmount = container.clientWidth * 0.9;
+
+                btnNext.addEventListener("click", () => {
+                    console.log("Next clicked");
+                    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                });
+                btnPrev.classList.add("disabled");
+
+
+                btnNext.addEventListener("click", () => {
+                    const scrollAmount = container.clientWidth * 0.9; // calculate fresh
+                    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                });
+
+                function updateUI() {
+                    const maxScrollLeft = container.scrollWidth - container.clientWidth;
+                    const scrollLeft = container.scrollLeft;
+                    const hasOverflow = container.scrollWidth > container.clientWidth;
+
+                    const atStart = scrollLeft <= 0;
+                    const atEnd = scrollLeft >= maxScrollLeft - 5;
+
+                    // Only show scroll-next initially if overflow exists
+                    btnPrev.classList.toggle("disabled", true); // always hide prev on first load
+                    btnNext.classList.toggle("disabled", !hasOverflow); // show next if needed
+
+                    // Adjust buttons on scroll
+                    if (!atStart) {
+                        btnPrev.classList.remove("disabled");
+                    }
+                    if (atEnd) {
+                        btnNext.classList.add("disabled");
+                    }
+
+                    // Fade effect
+                    if (fadeRight) {
+                        fadeRight.classList.toggle("visible", hasOverflow && !atEnd);
+                    }
+                }
+
+                // Event listeners
+                container.addEventListener("scroll", updateUI);
+                window.addEventListener("resize", updateUI);
+
+                btnNext.addEventListener("click", () => {
+                    container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                });
+
+                btnPrev.addEventListener("click", () => {
+                    container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+                });
+
+                // Run after DOM and images are fully loaded
+                window.addEventListener("load", () => {
+                    requestAnimationFrame(updateUI);
+                });
+            </script> -->
+
+<!-- 
+            <script>
+
+                // const vouchers = [
+                // // 1st voucher
+                // {
+                // id: "BDAY1000",
+                // voucherCardImg: "ver4_voucher.png",
+                // dateRange: "July 1 - 15, 2025",
+                // code: "BDAY1000",
+                // voucher_card_info: "See applicable brands, min spend of P30,000",
+                // // Modals:
+                // modalTitle: "BDAY1000",
+                // modalSections: [
+                // {
+                // contentType: "links",
+                // title:
+                // "Get up to P1000 OFF with a minimum purchase of P50,000 on all applicable brands",
+                // content: [
+                // { text: "LG", href: "https://www.abenson.com/brands/lg" },
+                // { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
+                // { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
+                // { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                // { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                // { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
+                // { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
+                // { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
+                // { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
+                // { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
+                // { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
+                // { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
+                // ],
+                // },
+                // {
+                // contentType: "links",
+                // title: "Where to avail",
+                // content: [
+                // { text: "abenson.com", href: "https://www.abenson.com/" },
+                // { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                // { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
+                // ],
+                // },
+                // {
+                // contentType: "list",
+                // title: "Terms & Conditions",
+                // content: [
+                // "Promo code is valid for one time use only.",
+                // "Promo terms and conditions are subject to change without prior notice.",
+                // "Applicable for cash/straight online transactions only.",
+                // ],
+                // },
+                // ],
+                // },//end of 1st voucher
+                // //
+                // // 2nd voucher
+                // {
+                // id: "BDAY500",
+                // voucherCardImg: "ver4_voucher.png",
+                // dateRange: "July 1 - 15, 2025",
+                // code: "BDAY500",
+                // voucher_card_info: "See applicable brands",
+
+                // // Modals:
+                // modalTitle: "BDAY500",
+                // modalSections: [
+                // {
+                // contentType: "links",
+                // title:
+                // "Get up to P500 OFF with a minimum purchase of P50,000 on all applicable brands",
+                // content: [
+                // { text: "LG", href: "https://www.abenson.com/brands/lg" },
+                // { text: "Samsung TVs", href: "https://www.abenson.com/television/samsung-official-store.html" },
+                // { text: "Samsung Home Appliances", href: "https://www.abenson.com/campaigns/samsung-home-appliance" },
+                // { text: "Samsung Aircons", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                // { text: "Panasonic", href: "https://www.abenson.com/aircon/samsung-airconditioners.html" },
+                // { text: "TCL", href: "https://www.abenson.com/brands/tcl" },
+                // { text: "Whirlpool", href: "https://www.abenson.com/brands/whirlpool" },
+                // { text: "Condura Home Appliances", href: "https://www.abenson.com/brands/official-store/condura" },
+                // { text: "Kolin", href: "https://www.abenson.com/brands/kolin" },
+                // { text: "Carrier", href: "https://www.abenson.com/brands/carrier" }
+                // ],
+                // },
+                // {
+                // contentType: "links",
+                // title: "Where to avail",
+                // content: [
+                // { text: "abenson.com", href: "https://www.abenson.com/" },
+                // { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                // { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
+                // ],
+                // },
+                // {
+                // contentType: "list",
+                // title: "Terms & Conditions",
+                // content: [
+                // "Promo code is valid for one time use only.",
+                // "Promo terms and conditions are subject to change without prior notice.",
+                // "Applicable for cash/straight online transactions only.",
+                // ],
+                // },
+                // ],
+                // },//end of 2nd voucher
+                // //
+                // // 3rd voucher
+                // {
+                // id: "BDAY450",
+                // voucherCardImg: "ver4_voucher.png",
+                // // voucherCardImg:
+                "https://d1rlzxa98cyc61.cloudfront.net/wysiwyg/pages/birthday_page/bday_voucher_450.jpg",
+                // dateRange: "July 1 - 15, 2025",
+                // code: "BDAY450",
+                // voucher_card_info: "See applicable items",
+                // // Modals:
+                // modalTitle: "BDAY450",
+                // modalSections: [
+                // {
+                // contentType: "links",
+                // title:
+                // "Get up to P450 OFF with a minimum purchase of P50,000 on all applicable brands",
+                // content: [
+                // { text: "Fujidenzo", href: "https://www.abenson.com/brands/fujidenzo" },
+                // { text: "Skyworth", href: "https://www.abenson.com/brands/skyworth" },
+                // ],
+                // },
+                // {
+                // contentType: "links",
+                // title: "Where to avail",
+                // content: [
+                // { text: "abenson.com", href: "https://www.abenson.com/" },
+                // { text: "Abenson Viber Community", href: "https://tinyurl.com/abensonviber" },
+                // { text: "Abenson Hotline: (02)8811-8811", href: "tel:+63288118811" },
+                // ],
+                // },
+                // {
+                // contentType: "list",
+                // title: "Terms & Conditions",
+                // content: [
+                // "Promo code is valid for one time use only.",
+                // "Promo terms and conditions are subject to change without prior notice.",
+                // "Applicable for cash/straight online transactions only.",
+                // ],
+                // },
+                // ],
+                // },//end of 3rd voucher
+                // ];
+            </script>
+ -->
