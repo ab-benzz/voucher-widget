@@ -71,7 +71,7 @@
   );
   background-size: 400% 100%;
   animation: VoucherSkeleton 10s infinite linear;
-  background-color: #ededede3;
+  background-color: #fffffff2;
 }
 
 @keyframes VoucherSkeleton {
@@ -251,9 +251,10 @@
 }
 
 /* Modal */
-div:has(.modal) {
+div:has(.modal-container) {
   position: absolute;
 }
+
 .modal {
   position: fixed;
   top: 0;
