@@ -69,7 +69,13 @@
                 </svg>
             </button>
 
-            <div id="voucher-container"></div>
+            <div id="voucher-container">
+                <div class="voucher-skeleton"></div>
+                <div class="voucher-skeleton"></div>
+                <div class="voucher-skeleton"></div>
+                <div class="voucher-skeleton"></div>
+                <div class="voucher-skeleton"></div>
+            </div>
 
             <button class="voucher-button" id="scroll-prev">
                 <svg fill="#767676" height="33px" width="33.2px" version="1.1" id="Layer_1"
@@ -99,7 +105,7 @@
 
                 const url = `https://ab-benzz.github.io/ui-ux-json/data/Sheet1.json?t=${Date.now()}`;
 
-                fetch(url)
+                fetchs(url)
                     .then(response => response.json())
                     .then(data => {
                         vouchers = data;
@@ -244,6 +250,7 @@
 
                             targetModal.classList.remove('hidden');
                             content.classList.add('slide-in');
+                            document.body.style.overflow = 'hidden';
 
                             content.addEventListener('animationend', () => {
                                 content.classList.remove('slide-in');

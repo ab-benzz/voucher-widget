@@ -162,6 +162,13 @@
   justify-content: center;
 }
 
+#scroll-next {
+  right: 0;
+}
+#scroll-prev {
+  left: 0;
+}
+
 @media screen and (width > 768px) {
   #carousel-voucher-banner {
     flex-direction: row;
@@ -189,12 +196,19 @@
   .ab-img {
     width: 100%;
   }
-  /* #payday-sale-banner {
-    display: grid;
-    grid-template-columns: 35% 65%;
-    padding: clamp(10px, 2vw, 15px) clamp(20px, 2vw, 60px);
-    gap: 10px;
-  } */
+}
+
+@media screen and (width >1200px) {
+  #scroll-next {
+    right: -2% !important;
+  }
+  #scroll-prev {
+    left: -2% !important;
+  }
+
+  .test-cont {
+    overflow: visible !important;
+  }
 }
 
 @media screen and (width > 1400px) {
